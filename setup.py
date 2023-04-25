@@ -40,7 +40,7 @@ setup(
     packages=find_packages(include=['chatify', 'chatify.*']),
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/HemuManju/chatify',
+    url='https://github.com/ContextLab/chatify',
     version='0.1.0',
     zip_safe=False,
 )
