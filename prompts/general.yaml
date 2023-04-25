@@ -1,0 +1,5 @@
+basic:
+  input_variables: ['text']
+  content: >
+    I want you to act as a teacher and explain the following text to a five year old: {text}.
+  template_format: f-string
