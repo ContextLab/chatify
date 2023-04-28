@@ -1,13 +1,13 @@
 import yaml
 
 from langchain.prompts import PromptTemplate
-from langchain import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains import LLMChain, LLMMathChain
 
 config = yaml.load(open('../config.yaml'), Loader=yaml.SafeLoader)
 
 # Language model
-llm = OpenAI(
+llm = ChatOpenAI(
     temperature=0.85,
     openai_api_key=config['open_ai_key'],
     model_name=config['model'],
