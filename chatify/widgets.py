@@ -17,7 +17,7 @@ def button_widget():
         description='Explain',
         disabled=False,
         button_style='',
-        tooltip='Chatify',
+        tooltip='Get ',
         icon='fa-comments',
     )
     return button
@@ -29,6 +29,7 @@ def thumbs(icon='fa-thumbs-up'):
         disabled=False,
         button_style='',
         icon=icon,
+        layout=widgets.Layout(width='5%'),
     )
     return button
 

@@ -1,4 +1,4 @@
-10_year_old:
+10 year old:
   input_variables: ['text']
   content: >
     I want you to act as a teacher and explain the following text to a 10 year old: {text}.
@@ -10,7 +10,7 @@ expert:
     I want you to act as a teacher and explain the following text to an expert: {text}.
   template_format: f-string
 
-phd_student:
+PhD student:
   input_variables: ['text']
   content: >
     I want you to act as a teacher and explain the following text to a PhD student: {text}.

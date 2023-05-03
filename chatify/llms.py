@@ -33,6 +33,3 @@ class CreateLLMChains:
     def explainchain(self, prompt_template):
         chain = LLMChain(llm=llm, prompt=self.create_prompt(prompt_template))
         return chain
-
-
-llm_chains = CreateLLMChains()
