@@ -9,7 +9,7 @@ from IPython.display import display
 
 import ipywidgets as widgets
 
-from .llms import CreateLLMChains
+from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
 
@@ -17,8 +17,8 @@ from .widgets import option_widget, button_widget, text_widget, thumbs
 class Chatify(Magics):
     def __init__(self, shell=None, **kwargs):
         super().__init__(shell, **kwargs)
-
-        self.llm_chains = CreateLLMChains()
+        self.cfg = yaml.load(open('../config.yaml'), Loader=yaml.SafeLoader)
+        self.llm_chain = CreateLLMChain(self.cfg)
 
     def _read_prompt_dir(self):
         prompt_files = list(pathlib.Path('../prompts/').glob('*.yaml'))
@@ -62,10 +62,10 @@ class Chatify(Magics):
 
     def gpt(self, inputs, prompt):
         # Query the GPT model
-        # chain = llm_chains.explainchain(prompt)
-        # output = chain(inputs['cell'])
-        output = {}
-        output['text'] = 'Hello world'
+        chain = self.llm_chain.create_chain(
+            self.cfg['model_config'], prompt_template=prompt
+        )
+        output = self.llm_chain.execute(chain, inputs['cell'])
         return markdown.markdown(output['text'])
 
     def update_values(self, *args):
