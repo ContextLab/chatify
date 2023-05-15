@@ -13,29 +13,31 @@ from gptcache.similarity_evaluation.distance import SearchDistanceEvaluation
 
 
 class LLMCacher:
-    def __init__(self) -> None:
+    def __init__(self, config) -> None:
+        self.config = config
         return None
 
     def cache_llm(self, llm, *args, **kwargs):
-        # onnx = Onnx()
-        # cache_base = CacheBase('sqlite')
-        # vector_base = VectorBase('faiss', dimension=onnx.dimension)
-        # data_manager = get_data_manager(
-        #     cache_base, vector_base, max_size=10, clean_size=2
-        # )
-
-        # self.llm_cache = Cache()
-        # self.llm_cache.init(
-        #     pre_embedding_func=get_prompt,
-        #     embedding_func=onnx.to_embeddings,
-        #     data_manager=data_manager,
-        #     similarity_evaluation=SearchDistanceEvaluation(),
-        # )
-
-        # Exact caching
         self.llm_cache = Cache()
-        self.llm_cache.init(
-            pre_embedding_func=get_prompt,
-        )
+        self.llm_cache.set_openai_key()
+
+        if self.config['caching_strategy'] == 'similarity':
+            onnx = Onnx()
+            cache_base = CacheBase('sqlite')
+            vector_base = VectorBase('faiss', dimension=onnx.dimension)
+            data_manager = get_data_manager(
+                cache_base, vector_base, max_size=10, clean_size=2
+            )
+            self.llm_cache.init(
+                pre_embedding_func=get_prompt,
+                embedding_func=onnx.to_embeddings,
+                data_manager=data_manager,
+                similarity_evaluation=SearchDistanceEvaluation(),
+            )
+        else:
+            # Exact caching
+            self.llm_cache.init(
+                pre_embedding_func=get_prompt,
+            )
         llm = LangChainLLMs(llm=llm)
         return llm

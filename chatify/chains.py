@@ -16,7 +16,7 @@ class CreateLLMChain:
 
         # Models, Cache and chains
         self.llm_models_factory = ModelsFactory()
-        self.cacher = LLMCacher()
+        self.cacher = LLMCacher(config)
         self._setup_chain_factory()
         return None
 
