@@ -9,8 +9,14 @@ from .cache import LLMCacher
 
 class CreateLLMChain:
     def __init__(self, config) -> None:
+        # Parameters
         self.chain_config = config['chain_config']
+        self.llm_model = None
+        self.cache = config['cache']
+
+        # Models, Cache and chains
         self.llm_models_factory = ModelsFactory()
+        self.cacher = LLMCacher(config)
         self._setup_chain_factory()
         return None
 
@@ -24,8 +30,12 @@ class CreateLLMChain:
         return PROMPT
 
     def create_chain(self, model_config, prompt_template):
-        # Setup the LLM model
-        llm_model = self.llm_models_factory.get_model(model_config)
+        if self.llm_model is None:
+            # Setup the LLM model
+            self.llm_model = self.llm_models_factory.get_model(model_config)
+
+            if self.cache:
+                self.llm_model = self.cacher.cache_llm(self.llm_model)
 
         # Setup the chain
         try:
@@ -33,10 +43,15 @@ class CreateLLMChain:
         except KeyError:
             chain_type = 'default'
         chain = self.chain_factory[chain_type](
-            llm=llm_model, prompt=self.create_prompt(prompt_template)
+            llm=self.llm_model, prompt=self.create_prompt(prompt_template)
         )
         return chain
 
     def execute(self, chain, inputs, *args, **kwargs):
-        output = chain(inputs)
+        if self.cache:
+            inputs = chain.prompt.format(text=inputs)
+            output = chain.llm(inputs, cache_obj=self.cacher.llm_cache)
+        else:
+            output = chain(inputs)['text']
+
         return output

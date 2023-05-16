@@ -66,7 +66,7 @@ class Chatify(Magics):
             self.cfg['model_config'], prompt_template=prompt
         )
         output = self.llm_chain.execute(chain, inputs['cell'])
-        return markdown.markdown(output['text'])
+        return markdown.markdown(output)
 
     def update_values(self, *args):
         index = self.tabs.selected_index
@@ -94,7 +94,7 @@ class Chatify(Magics):
 
         # Create a tab group
         accordion = widgets.Accordion(children=[self.tabs])
-        accordion.set_title(0, 'Chatify')
+        accordion.set_title(0, 'Chatify ' + u"\U0001F916")
         display(accordion)
 
         # Button click
