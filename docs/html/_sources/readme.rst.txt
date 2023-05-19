@@ -1,0 +1,3 @@
+Welcome
+===============
+.. include:: ../README.md
