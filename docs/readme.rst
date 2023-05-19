@@ -1,1 +1,3 @@
-.. include:: ../README.rst
+Welcome
+===============
+.. include:: ../README.md

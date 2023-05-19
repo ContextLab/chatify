@@ -13,11 +13,36 @@ from gptcache.similarity_evaluation.distance import SearchDistanceEvaluation
 
 
 class LLMCacher:
-    def __init__(self, config) -> None:
+    """A class for caching and managing LLM (Language Model) instances."""
+
+    def __init__(self, config):
+        """Initializes a new LLMCacher instance.
+
+        Parameters:
+        -----------
+        config : dict
+            A dictionary containing configuration parameters.
+        """
         self.config = config
-        return None
+        self.llm_cache = None
 
     def cache_llm(self, llm, *args, **kwargs):
+        """Caches the LLM using the specified caching strategy.
+
+        Parameters:
+        -----------
+        llm : LLM
+            The LLM (Language Model) to be cached.
+        *args : positional arguments
+            Additional positional arguments.
+        **kwargs : keyword arguments
+            Additional keyword arguments.
+
+        Returns:
+        --------
+        llm : LangChainLLMs
+            The LangChainLLMs instance after caching the LLM.
+        """
         self.llm_cache = Cache()
         self.llm_cache.set_openai_key()
 

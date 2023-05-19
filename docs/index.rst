@@ -1,14 +1,15 @@
 Welcome to chatify's documentation!
 ======================================
 
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    readme
    installation
    usage
-   modules
+   modules/chatify
    contributing
    history
 
