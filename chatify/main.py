@@ -15,12 +15,27 @@ from .widgets import option_widget, button_widget, text_widget, thumbs
 
 @magics_class
 class Chatify(Magics):
+    """A class for interactive chat functionality.
+
+    Examples
+    --------
+    chat = Chatify()
+    chat.explain('prompt', 'input')
+    """
+
     def __init__(self, shell=None, **kwargs):
         super().__init__(shell, **kwargs)
         self.cfg = yaml.load(open('../config.yaml'), Loader=yaml.SafeLoader)
         self.llm_chain = CreateLLMChain(self.cfg)
 
     def _read_prompt_dir(self):
+        """Reads prompt files from the '../prompts/' directory.
+
+        Returns
+        -------
+        prompt_types : dict
+            A dictionary mapping prompt types to their corresponding YAML contents.
+        """
         prompt_files = list(pathlib.Path('../prompts/').glob('*.yaml'))
         prompt_types = {}
         for f in prompt_files:
@@ -30,6 +45,7 @@ class Chatify(Magics):
         return prompt_types
 
     def _create_ui_elements(self):
+        """Creates UI elements like buttons, prompt types, texts, and options."""
         # Buttons and prompt types
         self.button = button_widget()
         self.prompt_types = self._read_prompt_dir()
@@ -48,6 +64,18 @@ class Chatify(Magics):
         self.thumbs_down = thumbs('fa-thumbs-down')
 
     def _arrange_ui_elements(self, prompt_type):
+        """Arranges UI elements based on the selected prompt type.
+
+        Parameters
+        ----------
+        prompt_type : str
+            The selected prompt type.
+
+        Returns
+        -------
+        vbox : object
+            A VBox container holding the arranged UI elements.
+        """
         # Arrange options and buttons
         hbox = widgets.HBox(
             [
@@ -61,7 +89,20 @@ class Chatify(Magics):
         return vbox
 
     def gpt(self, inputs, prompt):
-        # Query the GPT model
+        """Queries the GPT model and returns the output in markdown format.
+
+        Parameters
+        ----------
+        inputs : dict
+            The input dictionary containing line and cell values.
+        prompt : str
+            The prompt for querying the GPT model.
+
+        Returns
+        -------
+        output : str
+            The GPT model output in markdown format.
+        """
         chain = self.llm_chain.create_chain(
             self.cfg['model_config'], prompt_template=prompt
         )
@@ -69,6 +110,13 @@ class Chatify(Magics):
         return markdown.markdown(output)
 
     def update_values(self, *args):
+        """Updates the values of UI elements based on the selected options.
+
+        Parameters
+        ----------
+        *args
+            Variable-length argument list.
+        """
         index = self.tabs.selected_index
         selected_prompt = self.prompt_names[index]
         # Get the prompt
@@ -77,6 +125,15 @@ class Chatify(Magics):
 
     @cell_magic
     def explain(self, line, cell):
+        """Executes the cell magic command 'explain' to display interactive chat UI.
+
+        Parameters
+        ----------
+        line : str
+            The command line arguments.
+        cell : str
+            The input cell contents.
+        """
         # Store the inputs for processing
         self.cell_inputs = {'line': line, 'cell': cell}
         self._create_ui_elements()
