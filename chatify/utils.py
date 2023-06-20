@@ -12,24 +12,9 @@ class FakeListLLM(LLM):
     ----------
     responses : List
         List of responses.
-    i : int
-        Counter for tracking the index.
-
-    Properties
-    ----------
-    _llm_type : str
-        Return type of LLM.
-    _identifying_params : Mapping[str, Any]
-        Identifying parameters.
-
-    Methods
-    -------
-    _call(prompt, stop=None)
-        First try to lookup in queries, else return 'foo' or 'bar'.
     """
 
     responses: List
-    i: int = 0
 
     @property
     def _llm_type(self) -> str:

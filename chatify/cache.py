@@ -29,8 +29,8 @@ class LLMCacher:
     def cache_llm(self, llm, *args, **kwargs):
         """Caches the LLM using the specified caching strategy.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         llm : LLM
             The LLM (Language Model) to be cached.
         *args : positional arguments
@@ -38,8 +38,8 @@ class LLMCacher:
         **kwargs : keyword arguments
             Additional keyword arguments.
 
-        Returns:
-        --------
+        Returns
+        -------
         llm : LangChainLLMs
             The LangChainLLMs instance after caching the LLM.
         """

@@ -119,7 +119,7 @@ class OpenAIChatModel(BaseLLMModel):
         llm_model = ChatOpenAI(
             temperature=0.85,
             openai_api_key=self.model_config['open_ai_key'],
-            model_name=self.model_config['model'],
+            model_name=self.model_config['model_name'],
             presence_penalty=0.1,
             max_tokens=500,
         )
