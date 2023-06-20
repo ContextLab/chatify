@@ -1,0 +1,72 @@
+from typing import Any, List, Mapping, Optional
+
+import random
+
+from langchain.llms.base import LLM
+
+
+class FakeListLLM(LLM):
+    """Fake LLM wrapper for testing purposes.
+
+    Attributes
+    ----------
+    responses : List
+        List of responses.
+    i : int
+        Counter for tracking the index.
+
+    Properties
+    ----------
+    _llm_type : str
+        Return type of LLM.
+    _identifying_params : Mapping[str, Any]
+        Identifying parameters.
+
+    Methods
+    -------
+    _call(prompt, stop=None)
+        First try to lookup in queries, else return 'foo' or 'bar'.
+    """
+
+    responses: List
+    i: int = 0
+
+    @property
+    def _llm_type(self) -> str:
+        """Return type of LLM.
+
+        Returns
+        -------
+        str
+            Type of LLM.
+        """
+        return "fake-list"
+
+    def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
+        """First try to lookup in queries, else return 'foo' or 'bar'.
+
+        Parameters
+        ----------
+        prompt : str
+            Input prompt.
+        stop : List[str], optional
+            List of stop tokens, by default None.
+
+        Returns
+        -------
+        str
+            Generated response.
+        """
+        response = self.responses[random.randint(0, len(self.responses) - 1)]
+        return response
+
+    @property
+    def _identifying_params(self) -> Mapping[str, Any]:
+        """Get the identifying parameters.
+
+        Returns
+        -------
+        Mapping[str, Any]
+            Identifying parameters.
+        """
+        return {}
