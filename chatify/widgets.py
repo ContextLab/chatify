@@ -55,10 +55,10 @@ def thumbs(icon='fa-thumbs-up'):
         Thumbs-up button widget.
     """
     button = widgets.Button(
-        description='',
+        description=icon,
         disabled=False,
         button_style='',
-        icon=icon,
+        icon=u'\U0001F44D',
         layout=widgets.Layout(width='5%'),
     )
     return button

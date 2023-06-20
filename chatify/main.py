@@ -2,7 +2,7 @@ import yaml
 import markdown
 
 import pathlib
-
+import os
 from IPython.core.magic import Magics, magics_class, cell_magic, line_magic
 from IPython.display import display
 
@@ -11,7 +11,6 @@ import ipywidgets as widgets
 from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
-import os
 
 default_config = {
     'cache': False,
@@ -55,7 +54,8 @@ class Chatify(Magics):
         prompt_types : dict
             A dictionary mapping prompt types to their corresponding YAML contents.
         """
-        prompt_files = list(pathlib.Path('../prompts/').glob('*.yaml'))
+        dirname = pathlib.Path(__file__).parent.resolve()
+        prompt_files = list(pathlib.Path(str(dirname) + '/prompts/').glob('*.yaml'))
         prompt_types = {}
         for f in prompt_files:
             prompt_types[f.name.split('.')[0]] = yaml.load(
@@ -79,8 +79,8 @@ class Chatify(Magics):
             self.options[key] = option_widget(values)
 
         # Thumbs up and down
-        self.thumbs_up = thumbs('fa-thumbs-up')
-        self.thumbs_down = thumbs('fa-thumbs-down')
+        self.thumbs_up = thumbs(u'\U0001F44D')
+        self.thumbs_down = thumbs(u'\U0001F44E')
 
     def _arrange_ui_elements(self, prompt_type):
         """Arranges UI elements based on the selected prompt type.
