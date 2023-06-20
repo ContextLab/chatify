@@ -13,8 +13,6 @@ from .widgets import option_widget, button_widget, text_widget, thumbs
 
 import os
 
-dirname = os.path.dirname(__file__)
-
 default_config = {
     'cache': False,
     'caching_strategy': 'exact',
@@ -57,7 +55,7 @@ class Chatify(Magics):
         prompt_types : dict
             A dictionary mapping prompt types to their corresponding YAML contents.
         """
-        prompt_files = list(pathlib.Path(dirname + '/prompts/').glob('*.yaml'))
+        prompt_files = list(pathlib.Path('../prompts/').glob('*.yaml'))
         prompt_types = {}
         for f in prompt_files:
             prompt_types[f.name.split('.')[0]] = yaml.load(

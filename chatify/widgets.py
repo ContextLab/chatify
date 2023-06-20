@@ -1,5 +1,4 @@
 import ipywidgets as widgets
-import IPython
 
 
 def option_widget(config):
