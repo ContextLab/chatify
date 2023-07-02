@@ -2,9 +2,9 @@ import yaml
 import markdown
 
 import pathlib
-import os
-from IPython.core.magic import Magics, magics_class, cell_magic, line_magic
+
 from IPython.display import display
+from IPython.core.magic import Magics, magics_class, cell_magic
 
 import ipywidgets as widgets
 
@@ -13,7 +13,13 @@ from .widgets import option_widget, button_widget, text_widget, thumbs
 
 
 default_config = {
-    'cache': False,
+    'cache_config': {
+        'cache': True,
+        'caching_strategy': 'exact',
+        'cache_db_version': 0.1,
+        'url': None,
+    },
+    'feedback': False,
     'caching_strategy': 'exact',
     'model_config': {
         'open_ai_key': None,
@@ -40,11 +46,11 @@ class Chatify(Magics):
     def __init__(self, shell=None, **kwargs):
         super().__init__(shell, **kwargs)
         try:
-            self.cfg = yaml.load(open('../config.yaml'), Loader=yaml.SafeLoader)
+            self.cfg = yaml.load(open('config.yaml'), Loader=yaml.SafeLoader)
         except FileNotFoundError:
             self.cfg = default_config
-
         self.llm_chain = CreateLLMChain(self.cfg)
+        self.tabs = None
 
     def _read_prompt_dir(self):
         """Reads prompt files from the dirname + '/prompts/' directory.
@@ -96,14 +102,21 @@ class Chatify(Magics):
             A VBox container holding the arranged UI elements.
         """
         # Arrange options and buttons
-        hbox = widgets.HBox(
-            [
+        if self.cfg['feedback']:
+            elements = [
                 self.options[prompt_type],
                 self.button,
                 self.thumbs_up,
                 self.thumbs_down,
             ]
-        )
+
+        else:
+            elements = [
+                self.options[prompt_type],
+                self.button,
+            ]
+        hbox = widgets.HBox(elements)
+
         vbox = widgets.VBox([hbox, self.texts[prompt_type]])
         return vbox
 
@@ -125,10 +138,11 @@ class Chatify(Magics):
         chain = self.llm_chain.create_chain(
             self.cfg['model_config'], prompt_template=prompt
         )
+
         output = self.llm_chain.execute(chain, inputs['cell'])
         return markdown.markdown(output)
 
-    def update_values(self, *args):
+    def update_values(self, *args, **kwargs):
         """Updates the values of UI elements based on the selected options.
 
         Parameters
@@ -160,9 +174,7 @@ class Chatify(Magics):
                 'thumbs_up': self.thumbs_up.get_state(),
                 'thumbs_down': self.thumbs_down.get_state(),
             }
-
-        # Need record logic
-        display(data)
+        # TODO: Implement data recording logic
 
     @cell_magic
     def explain(self, line, cell):

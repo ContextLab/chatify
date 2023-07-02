@@ -23,7 +23,7 @@ class CreateLLMChain:
         """
         self.chain_config = config['chain_config']
         self.llm_model = None
-        self.cache = config['cache']
+        self.cache = config['cache_config']['cache']
         self.llm_models_factory = ModelsFactory()
         self.cacher = LLMCacher(config)
         self._setup_chain_factory()
@@ -99,6 +99,7 @@ class CreateLLMChain:
         if self.cache:
             inputs = chain.prompt.format(text=inputs)
             output = chain.llm(inputs, cache_obj=self.cacher.llm_cache)
+            self.cacher.llm_cache.flush()
         else:
             output = chain(inputs)['text']
 
