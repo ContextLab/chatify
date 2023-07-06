@@ -19,6 +19,7 @@ default_config = {
         'cache_db_version': 0.1,
         'url': None,
     },
+    'prompts_config': {'prompts_to_use': ['general']},
     'feedback': False,
     'caching_strategy': 'exact',
     'model_config': {
@@ -46,9 +47,10 @@ class Chatify(Magics):
     def __init__(self, shell=None, **kwargs):
         super().__init__(shell, **kwargs)
         try:
-            self.cfg = yaml.load(open('config.yaml'), Loader=yaml.SafeLoader)
+            self.cfg = yaml.load(open('./config.yaml'), Loader=yaml.SafeLoader)
         except FileNotFoundError:
             self.cfg = default_config
+        self.prompts_config = self.cfg['prompts_config']
         self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
 
@@ -64,9 +66,10 @@ class Chatify(Magics):
         prompt_files = list(pathlib.Path(str(dirname) + '/prompts/').glob('*.yaml'))
         prompt_types = {}
         for f in prompt_files:
-            prompt_types[f.name.split('.')[0]] = yaml.load(
-                open(f), Loader=yaml.SafeLoader
-            )
+            if f.name.split('.')[0] in self.prompts_config['prompts_to_use']:
+                prompt_types[f.name.split('.')[0]] = yaml.load(
+                    open(f), Loader=yaml.SafeLoader
+                )
         return prompt_types
 
     def _create_ui_elements(self):
