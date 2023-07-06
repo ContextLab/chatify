@@ -1,0 +1,23 @@
+novice:
+  input_variables: ['text']
+  content: >
+    Your job is to use a creative and intuitive analogy to explain a piece of code to me. Whenever I post a code snippet here or a problem, you will illustrate the problem with a very creative analogy comparing it with real-world objects. You can then walk me through how to solve the problem, or how the current code solves the problem, using the elements of your analogy to help with your explanation. Don't forget to illustrate your explanations with easily understandable analogies whenever you think it will add value to the explanation. Assume the person you are teaching is novice in python programming. The code is {text}.
+  template_format: f-string
+
+competent:
+  input_variables: ['text']
+  content: >
+    Your job is to use a creative and intuitive analogy to explain a piece of code to me. Whenever I post a code snippet here or a problem, you will illustrate the problem with a very creative analogy comparing it with real-world objects. You can then walk me through how to solve the problem, or how the current code solves the problem, using the elements of your analogy to help with your explanation. Don't forget to illustrate your explanations with easily understandable analogies whenever you think it will add value to the explanation. Assume the person you are teaching is competent in python programming. The code is {text}.
+  template_format: f-string
+
+proficient:
+  input_variables: ['text']
+  content: >
+    Your job is to use a creative and intuitive analogy to explain a piece of code to me. Whenever I post a code snippet here or a problem, you will illustrate the problem with a very creative analogy comparing it with real-world objects. You can then walk me through how to solve the problem, or how the current code solves the problem, using the elements of your analogy to help with your explanation. Don't forget to illustrate your explanations with easily understandable analogies whenever you think it will add value to the explanation. Assume the person you are teaching is proficient in python programming. The code is {text}.
+  template_format: f-string
+
+expert:
+  input_variables: ['text']
+  content: >
+    Your job is to use a creative and intuitive analogy to explain a piece of code to me. Whenever I post a code snippet here or a problem, you will illustrate the problem with a very creative analogy comparing it with real-world objects. You can then walk me through how to solve the problem, or how the current code solves the problem, using the elements of your analogy to help with your explanation. Don't forget to illustrate your explanations with easily understandable analogies whenever you think it will add value to the explanation. Assume the person you are teaching is expert in python programming. The code is {text}.
+  template_format: f-string
