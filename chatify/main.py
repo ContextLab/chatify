@@ -3,14 +3,31 @@ import markdown
 
 import pathlib
 
-
-from IPython.core.magic import Magics, magics_class, cell_magic
 from IPython.display import display
+from IPython.core.magic import Magics, magics_class, cell_magic
 
 import ipywidgets as widgets
 
 from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
+
+
+default_config = {
+    'cache_config': {
+        'cache': True,
+        'caching_strategy': 'exact',
+        'cache_db_version': 0.1,
+        'url': None,
+    },
+    'feedback': False,
+    'caching_strategy': 'exact',
+    'model_config': {
+        'open_ai_key': None,
+        'model': 'fake_model',
+        'model_name': 'gpt-3.5-turbo',
+    },
+    'chain_config': {'chain_type': 'default'},
+}
 
 
 @magics_class
@@ -19,24 +36,32 @@ class Chatify(Magics):
 
     Examples
     --------
-    chat = Chatify()
-    chat.explain('prompt', 'input')
+
+    .. code-block:: python
+
+        chat = Chatify()
+        chat.explain('prompt', 'input')
     """
 
     def __init__(self, shell=None, **kwargs):
         super().__init__(shell, **kwargs)
-        self.cfg = yaml.load(open('../config.yaml'), Loader=yaml.SafeLoader)
+        try:
+            self.cfg = yaml.load(open('config.yaml'), Loader=yaml.SafeLoader)
+        except FileNotFoundError:
+            self.cfg = default_config
         self.llm_chain = CreateLLMChain(self.cfg)
+        self.tabs = None
 
     def _read_prompt_dir(self):
-        """Reads prompt files from the '../prompts/' directory.
+        """Reads prompt files from the dirname + '/prompts/' directory.
 
         Returns
         -------
         prompt_types : dict
             A dictionary mapping prompt types to their corresponding YAML contents.
         """
-        prompt_files = list(pathlib.Path('../prompts/').glob('*.yaml'))
+        dirname = pathlib.Path(__file__).parent.resolve()
+        prompt_files = list(pathlib.Path(str(dirname) + '/prompts/').glob('*.yaml'))
         prompt_types = {}
         for f in prompt_files:
             prompt_types[f.name.split('.')[0]] = yaml.load(
@@ -60,8 +85,8 @@ class Chatify(Magics):
             self.options[key] = option_widget(values)
 
         # Thumbs up and down
-        self.thumbs_up = thumbs('fa-thumbs-up')
-        self.thumbs_down = thumbs('fa-thumbs-down')
+        self.thumbs_up = thumbs(u'\U0001F44D')
+        self.thumbs_down = thumbs(u'\U0001F44E')
 
     def _arrange_ui_elements(self, prompt_type):
         """Arranges UI elements based on the selected prompt type.
@@ -77,14 +102,21 @@ class Chatify(Magics):
             A VBox container holding the arranged UI elements.
         """
         # Arrange options and buttons
-        hbox = widgets.HBox(
-            [
+        if self.cfg['feedback']:
+            elements = [
                 self.options[prompt_type],
                 self.button,
                 self.thumbs_up,
                 self.thumbs_down,
             ]
-        )
+
+        else:
+            elements = [
+                self.options[prompt_type],
+                self.button,
+            ]
+        hbox = widgets.HBox(elements)
+
         vbox = widgets.VBox([hbox, self.texts[prompt_type]])
         return vbox
 
@@ -106,10 +138,11 @@ class Chatify(Magics):
         chain = self.llm_chain.create_chain(
             self.cfg['model_config'], prompt_template=prompt
         )
+
         output = self.llm_chain.execute(chain, inputs['cell'])
         return markdown.markdown(output)
 
-    def update_values(self, *args):
+    def update_values(self, *args, **kwargs):
         """Updates the values of UI elements based on the selected options.
 
         Parameters
@@ -120,8 +153,28 @@ class Chatify(Magics):
         index = self.tabs.selected_index
         selected_prompt = self.prompt_names[index]
         # Get the prompt
-        prompt = self.prompt_types[selected_prompt][self.options[selected_prompt].value]
-        self.texts[selected_prompt].value = self.gpt(self.cell_inputs, prompt)
+        self.prompt = self.prompt_types[selected_prompt][
+            self.options[selected_prompt].value
+        ]
+        self.texts[selected_prompt].value = self.gpt(self.cell_inputs, self.prompt)
+        self.response = self.texts[selected_prompt].value
+
+    def record(self, *args):
+        try:
+            data = {
+                'prompt': self.prompt,
+                'response': self.response,
+                'thumbs_up': self.thumbs_up.get_state(),
+                'thumbs_down': self.thumbs_down.get_state(),
+            }
+        except AttributeError:
+            data = {
+                'prompt': None,
+                'response': None,
+                'thumbs_up': self.thumbs_up.get_state(),
+                'thumbs_down': self.thumbs_down.get_state(),
+            }
+        # TODO: Implement data recording logic
 
     @cell_magic
     def explain(self, line, cell):
@@ -156,3 +209,7 @@ class Chatify(Magics):
 
         # Button click
         self.button.on_click(self.update_values)
+
+        # Thumbs up and down
+        self.thumbs_down.on_click(self.record)
+        self.thumbs_up.on_click(self.record)

@@ -1,6 +1,9 @@
 from typing import Any, List, Mapping, Optional
 
+
 import random
+import requests as req
+
 
 from langchain.llms.base import LLM
 
@@ -12,24 +15,9 @@ class FakeListLLM(LLM):
     ----------
     responses : List
         List of responses.
-    i : int
-        Counter for tracking the index.
-
-    Properties
-    ----------
-    _llm_type : str
-        Return type of LLM.
-    _identifying_params : Mapping[str, Any]
-        Identifying parameters.
-
-    Methods
-    -------
-    _call(prompt, stop=None)
-        First try to lookup in queries, else return 'foo' or 'bar'.
     """
 
     responses: List
-    i: int = 0
 
     @property
     def _llm_type(self) -> str:
@@ -70,3 +58,16 @@ class FakeListLLM(LLM):
             Identifying parameters.
         """
         return {}
+
+
+def download_cache_database(config):
+    try:
+        cache_db_version = config['cache_db_version']
+        file_name = f'neuro_match_llm_cache_{cache_db_version}.txt'
+        url = config['url'] + f'/{file_name}'
+        res = req.get(url)
+        with open(file_name, 'rb') as f:
+            f.write(res.text)
+            f.close()
+    except FileNotFoundError:
+        print(f'{file_name} is not found in the {url}')

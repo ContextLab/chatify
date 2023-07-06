@@ -3,6 +3,7 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
+from glob import glob
 
 with open('README.md') as readme_file:
     readme = readme_file.read()
@@ -40,6 +41,7 @@ setup(
     packages=find_packages(include=['chatify', 'chatify.*']),
     test_suite='tests',
     tests_require=test_requirements,
+    package_data={'': ['**/*.yaml']},
     url='https://github.com/ContextLab/chatify',
     version='0.1.0',
     zip_safe=False,
