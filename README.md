@@ -7,9 +7,9 @@ A python package that enables ipython magic commands to Jupyter notebooks that p
 
 # Background
 
-This tool was created to supplement the [NeuroMatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version, we've used [ChatGPT](https://chat.openai.com/chat) to pre-generate and cache responses for all of the current NeuroMatch materials.  The cached responses are included by default when you install chatify in your environment, so running queries using those materials does not require any additional setup (nor do you need an OpenAI API key).
+This tool was created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version, we've used [ChatGPT](https://chat.openai.com/chat) to pre-generate and cache responses for all of the current NeuroMatch materials.  The cached responses are included by default when you install chatify in your environment, so running queries using those materials does not require any additional setup (nor do you need an OpenAI API key).
 
-## Installing and enabling Chatify: default NeuroMatch version
+## Installing and enabling Chatify: default Neuromatch version
 To install and enable chatify in any NeuroMatch tutorial notebook, add the following two cells to the top of your notebook (and run them):
 
 ```python
@@ -48,7 +48,7 @@ chain_config:
   chain_type: default
 ```
 
-After saving your `config.yaml` file, follow the "**Installing and enabling Chatify: default NeuroMatch version**" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
+After saving your `config.yaml` file, follow the "**Installing and enabling Chatify: default Neuromatch version**" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
 
 
 # What do I do if I have questions or problems?
