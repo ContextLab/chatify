@@ -12,7 +12,7 @@ To install and enable chatify in any NeuroMatch tutorial notebook, add the follo
 ```python
 %pip install davos
 import davos
-davos.suppress_stdout = True
+davos.config.suppress_stdout = True
 ```
 
 ```python
