@@ -11,7 +11,7 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = []
+requirements = ['gptcache>=0.1.35', 'langchain>=0.0.226', 'openai>=0.27.8']
 
 test_requirements = [
     'pytest>=3',
@@ -40,6 +40,7 @@ setup(
     name='chatify',
     packages=find_packages(include=['chatify', 'chatify.*']),
     test_suite='tests',
+    require=requirements,
     tests_require=test_requirements,
     package_data={'': ['**/*.yaml']},
     url='https://github.com/ContextLab/chatify',
