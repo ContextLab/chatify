@@ -2,6 +2,9 @@
 
 A python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to markdown and code cells.  This package is currently in the *alpha* stage: expect broken things, crashes, bad (wrong, misleading) answers, and other issues.
 
+![Image credit: DALL-E-2; prompt: robotic tutor helping a human student learn to program, science fiction, detailed rendering, futuristic, exquisite detail, graphic artist](https://github.com/ContextLab/chatify/assets/9030494/e3b928e1-f683-44a5-af1e-5c51e3f0e541)
+
+
 # Background
 
 This tool was created to supplement the [NeuroMatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version, we've used [ChatGPT](https://chat.openai.com/chat) to pre-generate and cache responses for all of the current NeuroMatch materials.  The cached responses are included by default when you install chatify in your environment, so running queries using those materials does not require any additional setup (nor do you need an OpenAI API key).
