@@ -42,7 +42,7 @@ feedback: False
 model_config:
   open_ai_key: <OPENAI API KEY>
   model: open_ai_model
-  model_name: gpt-3.5-turbo  # alternative: gpt-4 (more expensive and slower, but higher-quality responses)
+  model_name: gpt-4  # alternative: for debugging consider using gpt-3.5-turbo (cheaper and faster, but lower-quality responses)
   max_tokens: 2500
 
 chain_config:
