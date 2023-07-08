@@ -64,7 +64,7 @@ def download_cache_database(config):
     try:
         cache_db_version = config['cache_db_version']
         file_name = f'neuro_match_llm_cache_{cache_db_version}.txt'
-        url = config['url'] + f'/{file_name}'
+        url = config['url']
         res = req.get(url)
         with open(file_name, 'rb') as f:
             f.write(res.text)
