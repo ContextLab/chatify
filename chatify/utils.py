@@ -67,8 +67,8 @@ def download_cache_database(config):
         file_name = f'NMA_2023_v{cache_db_version}.cache'
         url = config['url']
         res = req.get(url)
-        with open(os.path.join(os.getcwd(), file_name), 'rb') as f:
-            f.write(res.text)
+        with open(os.path.join(os.getcwd(), file_name), 'wb') as f:
+            f.write(res.content)
             f.close()
     except FileNotFoundError:
         print(f'{file_name} could not be downloaded from the provided cache URL: {url}')
