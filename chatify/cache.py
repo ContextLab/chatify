@@ -39,11 +39,11 @@ class LLMCacher:
             download_cache_database(self.cache_config)
 
         cache_db_version = self.cache_config['cache_db_version']
-        self.db_file = f'neuro_match_llm_cache_{cache_db_version}.txt'
+        self.db_file = f'NMA_2023_v{cache_db_version}.cache'
 
     def cache_llm(self, llm, *args, **kwargs):
         """Caches the LLM using the specified caching strategy.
-
+        
         Parameters
         ----------
         llm : LLM
