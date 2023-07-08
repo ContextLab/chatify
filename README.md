@@ -46,6 +46,9 @@ model_config:
 
 chain_config:
   chain_type: default
+
+prompts_config:
+  prompts_to_use: [general]
 ```
 
 After saving your `config.yaml` file, follow the "**Installing and enabling Chatify: default Neuromatch version**" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
