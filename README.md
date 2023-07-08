@@ -35,7 +35,7 @@ cache_config:
   cache: True
   caching_strategy: exact  # alternative: similarity
   cache_db_version: 0.1
-  url: https://www.dropbox.com/scl/fi/qw2lcscz7izpfk55lvruh/neuro_match_llm_cache_0.1.txt?rlkey=k7sfksk5x0x02t1rh3qxrc4ay&dl=1
+  url: https://www.dropbox.com/scl/fi/tpyl4hcrti63vvy0v6wm4/NMA_2023_v0.1.cache?rlkey=w5orop5qvmsl1u3hi96xtv5fu&dl=1
 
 feedback: False
 
@@ -43,12 +43,13 @@ model_config:
   open_ai_key: <OPENAI API KEY>
   model: open_ai_model
   model_name: gpt-3.5-turbo  # alternative: gpt-4 (more expensive and slower, but higher-quality responses)
+  max_tokens: 2500
 
 chain_config:
   chain_type: default
 
 prompts_config:
-  prompts_to_use: [general]
+  prompts_to_use: [tutor]
 ```
 
 After saving your `config.yaml` file, follow the "**Installing and enabling Chatify: default Neuromatch version**" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
