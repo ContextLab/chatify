@@ -128,7 +128,7 @@ class OpenAIModel(BaseLLMModel):
             openai_api_key=self.model_config['open_ai_key'],
             model_name=self.model_config['model_name'],
             presence_penalty=0.1,
-            max_tokens=500,
+            max_tokens=2500,
         )
         return llm_model
 
@@ -163,7 +163,7 @@ class OpenAIChatModel(BaseLLMModel):
             openai_api_key=self.model_config['open_ai_key'],
             model_name=self.model_config['model_name'],
             presence_penalty=0.1,
-            max_tokens=500,
+            max_tokens=2500,
         )
         return llm_model
 

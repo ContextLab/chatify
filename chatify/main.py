@@ -25,7 +25,7 @@ default_config = {
     'model_config': {
         'open_ai_key': None,
         'model': 'open_ai_model',
-        'model_name': 'gpt-3.5-turbo',
+        'model_name': 'gpt-4',
     },
     'chain_config': {'chain_type': 'default'},
 }
