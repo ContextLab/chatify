@@ -5,8 +5,6 @@ import random
 import requests as req
 import os
 
-import urllib
-
 from langchain.llms.base import LLM
 
 
