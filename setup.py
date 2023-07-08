@@ -11,7 +11,7 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['gptcache>=0.1.35', 'langchain>=0.0.226', 'openai>=0.27.8', 'markdown>=3.4.3', 'ipywidets>=7.7.1']
+requirements = ['gptcache>=0.1.35', 'langchain>=0.0.226', 'openai>=0.27.8', 'markdown>=3.4.3', 'ipywidgets>=7.7.1']
 
 test_requirements = [
     'pytest>=3',
