@@ -25,8 +25,8 @@ default_config = {
     'model_config': {
         'open_ai_key': None,
         'model': 'open_ai_model',
-        'model_name': 'gpt-3.5-turbo',
-        'max_tokens': 500,
+        'model_name': 'gpt-4',
+        'max_tokens': 2500,
     },
     'chain_config': {'chain_type': 'default'},
 }
