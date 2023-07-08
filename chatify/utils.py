@@ -3,6 +3,7 @@ from typing import Any, List, Mapping, Optional
 
 import random
 import requests as req
+import os
 
 
 from langchain.llms.base import LLM
@@ -66,8 +67,8 @@ def download_cache_database(config):
         file_name = f'NMA_2023_v{cache_db_version}.cache'
         url = config['url']
         res = req.get(url)
-        with open(file_name, 'rb') as f:
+        with open(os.path.join(os.getcwd(), file_name), 'rb') as f:
             f.write(res.text)
             f.close()
     except FileNotFoundError:
-        print(f'{file_name} is not found in the {url}')
+        print(f'{file_name} could not be downloaded from the provided cache URL: {url}')
