@@ -2,7 +2,6 @@ import os
 
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
-
 from .utils import FakeListLLM
 
 
@@ -128,7 +127,7 @@ class OpenAIModel(BaseLLMModel):
             openai_api_key=self.model_config['open_ai_key'],
             model_name=self.model_config['model_name'],
             presence_penalty=0.1,
-            max_tokens=2500,
+            max_tokens=self.model_config['max_tokens'],
         )
         return llm_model
 
@@ -163,7 +162,7 @@ class OpenAIChatModel(BaseLLMModel):
             openai_api_key=self.model_config['open_ai_key'],
             model_name=self.model_config['model_name'],
             presence_penalty=0.1,
-            max_tokens=2500,
+            max_tokens=self.model_config['max_tokens'],
         )
         return llm_model
 

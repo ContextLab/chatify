@@ -26,6 +26,7 @@ default_config = {
         'open_ai_key': None,
         'model': 'open_ai_model',
         'model_name': 'gpt-4',
+        'max_tokens': 2500,
     },
     'chain_config': {'chain_type': 'default'},
 }
@@ -122,6 +123,13 @@ class Chatify(Magics):
 
         vbox = widgets.VBox([hbox, self.texts[prompt_type]])
         return vbox
+
+    def _cache(self, input_string, prompt):
+        chain = self.llm_chain.create_chain(
+            self.cfg["model_config"], prompt_template=prompt
+        )
+        output = self.llm_chain.execute(chain, input_string)
+        return output
 
     def gpt(self, inputs, prompt):
         """Queries the GPT model and returns the output in markdown format.
