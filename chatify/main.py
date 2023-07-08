@@ -24,7 +24,7 @@ default_config = {
     'caching_strategy': 'exact',
     'model_config': {
         'open_ai_key': None,
-        'model': 'fake_model',
+        'model': 'open_ai_chat_model',
         'model_name': 'gpt-3.5-turbo',
     },
     'chain_config': {'chain_type': 'default'},
