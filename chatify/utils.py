@@ -2,8 +2,8 @@ from typing import Any, List, Mapping, Optional
 
 
 import random
-import requests as req
 
+import urllib
 
 from langchain.llms.base import LLM
 
@@ -64,10 +64,7 @@ def download_cache_database(config):
     try:
         cache_db_version = config['cache_db_version']
         file_name = f'neuro_match_llm_cache_{cache_db_version}.txt'
-        url = config['url'] + f'/{file_name}'
-        res = req.get(url)
-        with open(file_name, 'rb') as f:
-            f.write(res.text)
-            f.close()
+        url = config['url']
+        urllib.request.urlretrieve(url, file_name)
     except FileNotFoundError:
         print(f'{file_name} is not found in the {url}')
