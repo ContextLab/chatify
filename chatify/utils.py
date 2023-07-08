@@ -2,8 +2,8 @@ from typing import Any, List, Mapping, Optional
 
 
 import random
-
-import urllib
+import requests as req
+import os
 
 from langchain.llms.base import LLM
 
@@ -63,8 +63,11 @@ class FakeListLLM(LLM):
 def download_cache_database(config):
     try:
         cache_db_version = config['cache_db_version']
-        file_name = f'neuro_match_llm_cache_{cache_db_version}.txt'
+        file_name = f'NMA_2023_v{cache_db_version}.cache'
         url = config['url']
-        urllib.request.urlretrieve(url, file_name)
+        res = req.get(url)
+        with open(os.path.join(os.getcwd(), file_name), 'wb') as f:
+            f.write(res.content)
+            f.close()
     except FileNotFoundError:
-        print(f'{file_name} is not found in the {url}')
+        print(f'{file_name} could not be downloaded from the provided cache URL: {url}')
