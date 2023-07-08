@@ -19,7 +19,7 @@ default_config = {
         'cache_db_version': 0.1,
         'url': None,
     },
-    'prompts_config': {'prompts_to_use': ['general']},
+    'prompts_config': {'prompts_to_use': ['tutor']},
     'feedback': False,
     'caching_strategy': 'exact',
     'model_config': {
