@@ -17,7 +17,7 @@ default_config = {
         'cache': True,
         'caching_strategy': 'exact',
         'cache_db_version': 0.1,
-        'url': 'https://www.dropbox.com/scl/fi/tpyl4hcrti63vvy0v6wm4/NMA_2023_v0.1.cache?rlkey=w5orop5qvmsl1u3hi96xtv5fu&dl=1',
+        'url': 'https://www.dropbox.com/scl/fi/3nmqbyull7u4p6i380i9t/NMA_2023_v0.1_small.cache?rlkey=nvmjbjkwo9bpotyzdcp8ueruy&dl=1',
     },
     'prompts_config': {'prompts_to_use': ['tutor']},
     'feedback': False,
