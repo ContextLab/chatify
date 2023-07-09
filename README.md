@@ -51,7 +51,7 @@ prompts_config:
   prompts_to_use: [tutor]
 ```
 
-After saving your `config.yaml` file, follow the "**Installing and enabling Chatify: default Neuromatch version**" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
+After saving your `config.yaml` file, follow the "[**Installing and enabling Chatify: default (non-interactive) Neuromatch version**](README.md#installing-and-enabling-chatify-default-non-interactive-neuromatch-version)" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
 
 
 # What do I do if I have questions or problems?
