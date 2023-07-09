@@ -23,8 +23,8 @@ default_config = {
     'feedback': False,
     'caching_strategy': 'exact',
     'model_config': {
-        'open_ai_key': None,
-        'model': 'open_ai_model',
+        'open_ai_key': '<OPENAI API KEY>',
+        'model': 'cached_model',
         'model_name': 'gpt-4',
         'max_tokens': 2500,
     },
