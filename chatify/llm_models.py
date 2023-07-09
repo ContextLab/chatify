@@ -2,7 +2,9 @@ import os
 
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
-from .utils import FakeListLLM
+from .utils import FakeListLLM, download_cache_database
+
+from langchain.llms.base import LLM
 
 
 class ModelsFactory:
