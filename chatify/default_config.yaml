@@ -2,7 +2,7 @@ cache_config:
   cache: True
   caching_strategy: exact # or similarity
   cache_db_version: 0.1
-  url: https://www.dropbox.com/scl/fi/gikfgfag1ya44ph619x77/NMA_2023_v0.1_pickle.cache?rlkey=a989au3ilo6uvixp9avcmsc2m&dl=1
+  url: https://www.dropbox.com/scl/fi/tpyl4hcrti63vvy0v6wm4/NMA_2023_v0.1.cache?rlkey=w5orop5qvmsl1u3hi96xtv5fu&dl=1
 
 feedback: False
 
