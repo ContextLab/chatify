@@ -197,7 +197,7 @@ class FakeLLMModel(BaseLLMModel):
         llm_model : FakeListLLM
             Initialized Fake Chat Model.
         """
-        responses = ['Placeholder text (used for debugging)']
+        responses = ['The explanation you requested has not been included in Chatify\'s cache. You\'ll need to enable interactive mode to generate a response. Please see the [Chatify GitHub repository](https://github.com/ContextLab/chatify) for instructions.  Note that generating responses to uncached content will require an [OpenAI API Key](https://platform.openai.com/account/api-keys).']
         llm_model = FakeListLLM(responses=responses)
         return llm_model
 
