@@ -121,6 +121,8 @@ class OpenAIModel(BaseLLMModel):
         llm_model : ChatOpenAI
             Initialized OpenAI Chat Model.
         """
+        if self.model_config['open_ai_key'] is None:
+            raise ValueError(f'openai_api_key value cannot be None')
 
         os.environ["OPENAI_API_KEY"] = self.model_config['open_ai_key']
 
@@ -159,6 +161,9 @@ class OpenAIChatModel(BaseLLMModel):
         llm_model : ChatOpenAI
             Initialized OpenAI Chat Model.
         """
+        if self.model_config['open_ai_key'] is None:
+            raise ValueError(f'openai_api_key value cannot be None')
+
         llm_model = ChatOpenAI(
             temperature=0.85,
             openai_api_key=self.model_config['open_ai_key'],
@@ -220,5 +225,9 @@ class CachedLLMModel(BaseLLMModel):
         llm_model : FakeListLLM
             Initialized Fake Chat Model.
         """
-        llm_model = FakeListLLM(responses=['This is a cached response'])
+        llm_model = FakeListLLM(
+            responses=[
+                f'The explanation you requested has not been included in Chatify\'s cache. You\'ll need to enable interactive mode to generate a response. Please see the [Chatify GitHub repository](https://github.com/ContextLab/chatify) for instructions.  Note that generating responses to uncached content will require an [OpenAI API Key](https://platform.openai.com/account/api-keys).'
+            ]
+        )
         return llm_model
