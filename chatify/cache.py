@@ -5,7 +5,6 @@ from gptcache import Cache
 from gptcache.processor.pre import get_prompt
 
 
-from gptcache.processor.pre import get_prompt
 from gptcache.manager import get_data_manager, CacheBase, VectorBase
 
 
@@ -35,15 +34,17 @@ class LLMCacher:
         self._download_qa_database()
 
     def _download_qa_database(self):
-        if self.cache_config['url'] is not None:
-            download_cache_database(self.cache_config)
-
         cache_db_version = self.cache_config['cache_db_version']
         self.db_file = f'NMA_2023_v{cache_db_version}.cache'
 
+        if self.cache_config['url'] is not None:
+            download_cache_database(self.cache_config)
+        else:
+            print(f'Creating a new cache file: NMA_2023_v{cache_db_version}.cache')
+
     def cache_llm(self, llm, *args, **kwargs):
         """Caches the LLM using the specified caching strategy.
-        
+
         Parameters
         ----------
         llm : LLM

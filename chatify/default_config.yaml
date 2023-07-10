@@ -1,0 +1,18 @@
+cache_config:
+  cache: True
+  caching_strategy: exact # or similarity
+  cache_db_version: 0.1
+  url: https://www.dropbox.com/s/b7dt3w4ghs3v49w/NMA_2023_v0.1.cache?dl=1
+
+feedback: False
+
+model_config:
+  open_ai_key: null
+  model: fake_model
+  model_name: gpt-3.5-turbo # text-curie-001
+
+chain_config:
+  chain_type: default
+
+prompts_config:
+  prompts_to_use: [tutor]

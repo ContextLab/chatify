@@ -1,9 +1,7 @@
 from typing import Any, List, Mapping, Optional
 
-
 import random
-import requests as req
-import os
+import urllib
 
 from langchain.llms.base import LLM
 
@@ -60,14 +58,25 @@ class FakeListLLM(LLM):
         return {}
 
 
+def compress_code(text):
+    return '\n'.join(
+        [line.strip() for line in text.split('\n') if len(line.strip()) > 0]
+    )
+
+
+def check_dev_config(config):
+    # We assume that the dev config has openai api key
+    if config['model_config']['open_ai_key'] is None:
+        raise KeyError('OpenAI API key cannot be empty')
+
+
 def download_cache_database(config):
     try:
         cache_db_version = config['cache_db_version']
         file_name = f'NMA_2023_v{cache_db_version}.cache'
         url = config['url']
-        res = req.get(url)
-        with open(os.path.join(os.getcwd(), file_name), 'wb') as f:
-            f.write(res.content)
-            f.close()
+        print(f'Downloading the \'cache\' file.')
+
+        urllib.request.urlretrieve(url, file_name)
     except FileNotFoundError:
         print(f'{file_name} could not be downloaded from the provided cache URL: {url}')

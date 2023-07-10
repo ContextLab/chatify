@@ -11,25 +11,7 @@ import ipywidgets as widgets
 from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
-
-default_config = {
-    'cache_config': {
-        'cache': True,
-        'caching_strategy': 'exact',
-        'cache_db_version': 0.1,
-        'url': 'https://www.dropbox.com/scl/fi/3nmqbyull7u4p6i380i9t/NMA_2023_v0.1_small.cache?rlkey=nvmjbjkwo9bpotyzdcp8ueruy&dl=1',
-    },
-    'prompts_config': {'prompts_to_use': ['tutor']},
-    'feedback': False,
-    'caching_strategy': 'exact',
-    'model_config': {
-        'open_ai_key': '<OPENAI API KEY>',
-        'model': 'cached_model',
-        'model_name': 'gpt-4',
-        'max_tokens': 2500,
-    },
-    'chain_config': {'chain_type': 'default'},
-}
+from .utils import check_dev_config
 
 
 @magics_class
@@ -48,10 +30,22 @@ class Chatify(Magics):
     def __init__(self, shell=None, **kwargs):
         super().__init__(shell, **kwargs)
         try:
-            self.cfg = yaml.load(open('./config.yaml'), Loader=yaml.SafeLoader)
+            # If we find the config file we assume that user is a dev
+            self.cfg = yaml.load(open("./config.yaml"), Loader=yaml.SafeLoader)
+            print("config.yaml file found!")
+            # Check dev config file
+            check_dev_config(self.cfg)
+
         except FileNotFoundError:
-            self.cfg = default_config
-        self.prompts_config = self.cfg['prompts_config']
+            # If we don't find the user is an end-point user
+            dirname = pathlib.Path(__file__).parent.resolve()
+            self.cfg = yaml.load(
+                open(pathlib.Path(str(dirname) + "/default_config.yaml")),
+                Loader=yaml.SafeLoader,
+            )
+            print("Using default configuration!")
+
+        self.prompts_config = self.cfg["prompts_config"]
         self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
 
@@ -64,11 +58,11 @@ class Chatify(Magics):
             A dictionary mapping prompt types to their corresponding YAML contents.
         """
         dirname = pathlib.Path(__file__).parent.resolve()
-        prompt_files = list(pathlib.Path(str(dirname) + '/prompts/').glob('*.yaml'))
+        prompt_files = list(pathlib.Path(str(dirname) + "/prompts/").glob("*.yaml"))
         prompt_types = {}
         for f in prompt_files:
-            if f.name.split('.')[0] in self.prompts_config['prompts_to_use']:
-                prompt_types[f.name.split('.')[0]] = yaml.load(
+            if f.name.split(".")[0] in self.prompts_config["prompts_to_use"]:
+                prompt_types[f.name.split(".")[0]] = yaml.load(
                     open(f), Loader=yaml.SafeLoader
                 )
         return prompt_types
@@ -89,8 +83,8 @@ class Chatify(Magics):
             self.options[key] = option_widget(values)
 
         # Thumbs up and down
-        self.thumbs_up = thumbs(u'\U0001F44D')
-        self.thumbs_down = thumbs(u'\U0001F44E')
+        self.thumbs_up = thumbs("\U0001F44D")
+        self.thumbs_down = thumbs("\U0001F44E")
 
     def _arrange_ui_elements(self, prompt_type):
         """Arranges UI elements based on the selected prompt type.
@@ -106,7 +100,7 @@ class Chatify(Magics):
             A VBox container holding the arranged UI elements.
         """
         # Arrange options and buttons
-        if self.cfg['feedback']:
+        if self.cfg["feedback"]:
             elements = [
                 self.options[prompt_type],
                 self.button,
@@ -147,10 +141,10 @@ class Chatify(Magics):
             The GPT model output in markdown format.
         """
         chain = self.llm_chain.create_chain(
-            self.cfg['model_config'], prompt_template=prompt
+            self.cfg["model_config"], prompt_template=prompt
         )
 
-        output = self.llm_chain.execute(chain, inputs['cell'])
+        output = self.llm_chain.execute(chain, inputs["cell"])
         return markdown.markdown(output)
 
     def update_values(self, *args, **kwargs):
@@ -173,17 +167,17 @@ class Chatify(Magics):
     def record(self, *args):
         try:
             data = {
-                'prompt': self.prompt,
-                'response': self.response,
-                'thumbs_up': self.thumbs_up.get_state(),
-                'thumbs_down': self.thumbs_down.get_state(),
+                "prompt": self.prompt,
+                "response": self.response,
+                "thumbs_up": self.thumbs_up.get_state(),
+                "thumbs_down": self.thumbs_down.get_state(),
             }
         except AttributeError:
             data = {
-                'prompt': None,
-                'response': None,
-                'thumbs_up': self.thumbs_up.get_state(),
-                'thumbs_down': self.thumbs_down.get_state(),
+                "prompt": None,
+                "response": None,
+                "thumbs_up": self.thumbs_up.get_state(),
+                "thumbs_down": self.thumbs_down.get_state(),
             }
         # TODO: Implement data recording logic
 
@@ -199,7 +193,7 @@ class Chatify(Magics):
             The input cell contents.
         """
         # Store the inputs for processing
-        self.cell_inputs = {'line': line, 'cell': cell}
+        self.cell_inputs = {"line": line, "cell": cell}
         self._create_ui_elements()
 
         # Create tab container
@@ -211,11 +205,11 @@ class Chatify(Magics):
         # Name the tabs components
         for i, prompt_type in enumerate(self.prompt_types.keys()):
             self.tabs.set_title(i, prompt_type.title())
-            self.texts[prompt_type].value = ''
+            self.texts[prompt_type].value = ""
 
         # Create a tab group
         accordion = widgets.Accordion(children=[self.tabs])
-        accordion.set_title(0, 'Chatify ' + u"\U0001F916")
+        accordion.set_title(0, "Chatify " + "\U0001F916")
         display(accordion)
 
         # Button click
