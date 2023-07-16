@@ -7,7 +7,7 @@ A python package that enables ipython magic commands to Jupyter notebooks that p
 
 # Background
 
-This tool was created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version, we've used [ChatGPT](https://chat.openai.com/chat) to pre-generate and cache responses for all of the current NeuroMatch materials.  The cached responses are included by default when you install chatify in your environment, so running queries using those materials does not require any additional setup (nor do you need an OpenAI API key).
+This tool was created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version, we've used [ChatGPT](https://chat.openai.com/chat) to pre-generate and cache responses for all of the current NeuroMatch materials.  The cached responses are included by default when you install chatify in your environment, so running queries using those materials does not require any additional setup (nor do you need an OpenAI API key).  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
 
 ## Installing and enabling Chatify: default (non-interactive) Neuromatch version
 To install and enable chatify in any Neuromatch tutorial notebook, add the following two cells to the top of your notebook (and run them):
