@@ -1,10 +1,14 @@
 import os
 
-from langchain.llms import OpenAI
+from langchain.llms import OpenAI, HuggingFacePipeline
 from langchain.chat_models import ChatOpenAI
 from .utils import FakeListLLM, download_cache_database
 
+from transformers import AutoTokenizer
+
 from langchain.llms.base import LLM
+
+import torch
 
 
 class ModelsFactory:
@@ -52,6 +56,7 @@ class ModelsFactory:
             'open_ai_chat_model': OpenAIChatModel(model_config),
             'fake_model': FakeLLMModel(model_config),
             'cached_model': CachedLLMModel(model_config),
+            'huggingface_model': HuggingFaceModel(model_config)
         }
 
         if model_ in models.keys():
@@ -231,3 +236,66 @@ class CachedLLMModel(BaseLLMModel):
             ]
         )
         return llm_model
+
+
+class HuggingFaceModel(BaseLLMModel):    
+    def __init__(self, model_config) -> None:
+        """Initializes the model instance.
+
+        Parameters
+        ----------
+        model_config : dict
+            Configuration for the model.
+
+        Returns
+        -------
+        None
+        """
+        super().__init__(model_config)
+
+    def init_model(self):
+        """Initializes the OpenAI Chat Model.
+
+        Returns
+        -------
+        llm_model : HuggingFaceModel
+            Initialized Hugging Face Chat Model.
+        """
+
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_config['model_name'])
+        self.pipeline = transformers.pipeline(
+            "text-generation",
+            model=self.model_config['model_name'],
+            tokenizer=self.tokenizer,
+            torch_dtype=torch.bfloat16,
+            trust_remote_code=True,
+            device_map='auto',
+        )
+        return self
+
+    def _call(self, prompt: str, stop=None) -> str:
+        x = self.pipeline(prompt, max_length=self.model_config['max_tokens'], num_return_sequences=1, top_k=10)
+        return x['generated_text']
+
+    @property
+    def _llm_type(self) -> str:
+        """Return type of LLM.
+
+        Returns
+        -------
+        str
+            Type of LLM.
+        """
+        return "hugging-face"
+
+    @property
+    def _identifying_params(self):
+        """Get the identifying parameters.
+
+        Returns
+        -------
+        Mapping[str, Any]
+            Identifying parameters.
+        """
+        return {'model': self.model_config['model_name']}
+
