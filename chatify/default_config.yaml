@@ -9,7 +9,7 @@ feedback: False
 model_config:
   open_ai_key: null
   model: huggingface_model
-  model_name: psmathur/orca_mini_3b
+  model_name: saibo/llama-1B
   max_tokens: 2500
 
 chain_config:
