@@ -8,7 +8,7 @@ feedback: False
 
 model_config:
   open_ai_key: null
-  model: hugging_face_model
+  model: huggingface_model
   model_name: meta-llama/Llama-2-7b  # for better answers use Llama-2-70b (requires more disk space than Colab free provides)
   max_tokens: 2500
 
