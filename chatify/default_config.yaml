@@ -9,7 +9,7 @@ feedback: False
 model_config:
   open_ai_key: null
   model: huggingface_model
-  model_name: meta-llama/Llama-2-7b  # for better answers use Llama-2-70b (requires more disk space than Colab free provides)
+  model_name: Tap-M/Luna-AI-Llama2-Uncensored
   max_tokens: 2500
 
 chain_config:
