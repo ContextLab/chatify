@@ -2,7 +2,7 @@ cache_config:
   cache: False
   caching_strategy: exact # or similarity
   cache_db_version: 0.1
-  url: None
+  url: null
 
 feedback: False
 
