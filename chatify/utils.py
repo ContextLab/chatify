@@ -75,7 +75,7 @@ def download_cache_database(config):
         cache_db_version = config['cache_db_version']
         file_name = f'NMA_2023_v{cache_db_version}.cache'
         url = config['url']
-        print(f'Downloading the \'cache\' file.')
+        # print(f'Downloading the \'cache\' file.')
 
         urllib.request.urlretrieve(url, file_name)
     except FileNotFoundError:

@@ -18,7 +18,7 @@ def option_widget(config):
     options = widgets.Dropdown(
         options=keys,
         value=keys[0],
-        description='Options:',
+        description='How can I help?',
     )
     return options
 
@@ -32,10 +32,10 @@ def button_widget():
         Button widget.
     """
     button = widgets.Button(
-        description='Explain',
+        description='Go!',
         disabled=False,
         button_style='',
-        tooltip='Get',
+        tooltip='Press the button to generate a response!',
         icon='fa-comments',
     )
     return button

@@ -2,14 +2,14 @@ cache_config:
   cache: False
   caching_strategy: exact # or similarity
   cache_db_version: 0.1
-  url: https://www.dropbox.com/scl/fi/spv17fykwqq1v7pe138qn/NMA_2023_v0.1.cache?rlkey=gok0z8ks0zxjy9kp8c9gf30nt&dl=1
+  url: None
 
 feedback: False
 
 model_config:
   open_ai_key: null
   model: hugging_face_model
-  model_name: falcon-7b-instruct  # for better answers use falcon-40b-instruct (requires more disk space than Colab free provides)
+  model_name: meta-llama/Llama-2-7b  # for better answers use Llama-2-70b (requires more disk space than Colab free provides)
   max_tokens: 2500
 
 chain_config:
