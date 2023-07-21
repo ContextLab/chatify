@@ -9,7 +9,7 @@ feedback: False
 model_config:
   open_ai_key: null
   model: huggingface_model
-  model_name: EleutherAI/pythia-1b
+  model_name: bigscience/bloomz-560m
   max_tokens: 2000
 
 chain_config:
