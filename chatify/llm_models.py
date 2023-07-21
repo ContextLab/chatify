@@ -2,12 +2,10 @@ import os
 
 from langchain.llms import OpenAI, HuggingFacePipeline
 from langchain.chat_models import ChatOpenAI
-from .utils import FakeListLLM, download_cache_database
+from .utils import FakeListLLM
 
-from transformers import AutoTokenizer
 from langchain.llms.base import LLM
 
-import torch
 import warnings
 
 
@@ -264,9 +262,13 @@ class HuggingFaceModel(BaseLLMModel):
             Initialized Hugging Face Chat Model.
         """
 
-        return HuggingFacePipeline.from_model_id(
-            model_id=self.model_config['model_name'],
-            task='text-generation',
-            model_kwargs={'max_new_tokens': self.model_config['max_tokens']}
-        )
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+
+            llm = HuggingFacePipeline.from_model_id(
+                model_id=self.model_config['model_name'],
+                task='text-generation',
+                model_kwargs={'max_length': self.model_config['max_tokens']}
+                )
+        return llm
 

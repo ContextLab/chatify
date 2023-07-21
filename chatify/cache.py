@@ -1,5 +1,3 @@
-import os
-
 from gptcache.adapter.langchain_models import LangChainLLMs
 from gptcache import Cache
 from gptcache.processor.pre import get_prompt
