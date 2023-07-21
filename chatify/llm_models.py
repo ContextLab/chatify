@@ -5,10 +5,10 @@ from langchain.chat_models import ChatOpenAI
 from .utils import FakeListLLM, download_cache_database
 
 from transformers import AutoTokenizer
-
 from langchain.llms.base import LLM
 
 import torch
+import warnings
 
 
 class ModelsFactory:
@@ -60,7 +60,9 @@ class ModelsFactory:
         }
 
         if model_ in models.keys():
-            return models[model_].init_model()
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return models[model_].init_model()
         else:
             raise RuntimeError(f"{model_} is not supported yet!")
 
@@ -265,6 +267,6 @@ class HuggingFaceModel(BaseLLMModel):
         return HuggingFacePipeline.from_model_id(
             model_id=self.model_config['model_name'],
             task='text-generation',
-            model_kwargs={'max_length': self.model_config['max_tokens']}
+            model_kwargs={'max_new_tokens': self.model_config['max_tokens']}
         )
 

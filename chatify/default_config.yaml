@@ -10,7 +10,7 @@ model_config:
   open_ai_key: null
   model: huggingface_model
   model_name: saibo/llama-1B
-  max_tokens: 2500
+  max_tokens: 2000
 
 chain_config:
   chain_type: default
