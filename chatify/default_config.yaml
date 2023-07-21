@@ -9,7 +9,7 @@ feedback: False
 model_config:
   open_ai_key: null
   model: huggingface_model
-  model_name: saibo/llama-1B
+  model_name: EleutherAI/pythia-1b
   max_tokens: 2000
 
 chain_config:
