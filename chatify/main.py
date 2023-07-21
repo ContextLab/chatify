@@ -2,6 +2,7 @@ import yaml
 import markdown
 
 import pathlib
+import warnings
 
 from IPython.display import display
 from IPython.core.magic import Magics, magics_class, cell_magic
@@ -12,6 +13,7 @@ from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
 from .utils import check_dev_config
+from .llm_models import HuggingFaceModel
 
 
 @magics_class
@@ -32,22 +34,32 @@ class Chatify(Magics):
         try:
             # If we find the config file we assume that user is a dev
             self.cfg = yaml.load(open("./config.yaml"), Loader=yaml.SafeLoader)
-            print("config.yaml file found!")
+            print("config.yaml file found; using custom configuration.")
             # Check dev config file
             check_dev_config(self.cfg)
 
-        except FileNotFoundError:
+        except FileNotFoundError: 
             # If we don't find the user is an end-point user
             dirname = pathlib.Path(__file__).parent.resolve()
             self.cfg = yaml.load(
                 open(pathlib.Path(str(dirname) + "/default_config.yaml")),
                 Loader=yaml.SafeLoader,
             )
-            print("Using default configuration!")
 
         self.prompts_config = self.cfg["prompts_config"]
         self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
+
+        # download local model if needed
+        if self.cfg["model_config"]["model"] == "huggingface_model":
+            print('Downloading model from HuggingFace for local use; this may take a few minutes...')
+
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                llm = HuggingFaceModel(self.config["model_config"]).init_model()
+
+            # free up memory...
+            del llm
 
     def _read_prompt_dir(self):
         """Reads prompt files from the dirname + '/prompts/' directory.
