@@ -18,7 +18,7 @@ def option_widget(config):
     options = widgets.Dropdown(
         options=keys,
         value=keys[0],
-        description='How can I help?',
+        description='I\'d like to ',
     )
     return options
 
