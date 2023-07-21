@@ -270,14 +270,14 @@ class HuggingFaceModel(BaseLLMModel):
                 llm = HuggingFacePipeline.from_model_id(
                     model_id=self.model_config['model_name'],
                     task='text-generation',
-                    device=0,
-                    model_kwargs={'max_length': self.model_config['max_tokens']}
+                    device=0#,
+                    #model_kwargs={'max_length': self.model_config['max_tokens']}
                     )
             except:
                 llm = HuggingFacePipeline.from_model_id(
                     model_id=self.model_config['model_name'],
-                    task='text-generation',
-                    model_kwargs={'max_length': self.model_config['max_tokens']}
+                    task='text-generation'#,
+                    #model_kwargs={'max_length': self.model_config['max_tokens']}
                     )
         return llm
 
