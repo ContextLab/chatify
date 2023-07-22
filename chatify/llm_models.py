@@ -315,7 +315,7 @@ class LlamaModel(BaseLLMModel):
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            #callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+            callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
             try:
                 llm = LlamaCpp(
@@ -323,15 +323,15 @@ class LlamaModel(BaseLLMModel):
                     max_tokens=self.model_config['max_tokens'],
                     n_gpu_layers=self.model_config['n_gpu_layers'],                    
                     n_batch=self.model_config['n_batch'],
-                    #callback_manager=callback_manager,
-                    verbose=False
+                    callback_manager=callback_manager,
+                    verbose=True
                 )
             except:
                 llm = LlamaCpp(
                     model_path=self.model_path,
                     max_tokens=self.model_config['max_tokens'],                    
                     n_batch=self.model_config['n_batch'],
-                    #callback_manager=callback_manager,
-                    verbose=False
+                    callback_manager=callback_manager,
+                    verbose=True
                 )
         return llm
