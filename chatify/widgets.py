@@ -32,7 +32,7 @@ def button_widget():
         Button widget.
     """
     button = widgets.Button(
-        description='Go!',
+        description='Submit request',
         disabled=False,
         button_style='',
         tooltip='Press the button to generate a response!',
