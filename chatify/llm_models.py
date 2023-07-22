@@ -317,11 +317,6 @@ class LlamaModel(BaseLLMModel):
             warnings.simplefilter("ignore")
             callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
             
-            print(f'model path: {self.model_path}')
-            print(f'max tokens: {self.model_config["max_tokens"]}')
-            print(f'n batch: {self.model_config["n_batch"]}')
-            print(f'n gpu layers: {self.model_config["n_gpu_layers"]}')
-
             try:
                 llm = LlamaCpp(
                     model_path=self.model_path,

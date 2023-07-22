@@ -57,7 +57,7 @@ class Chatify(Magics):
 
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                llm = HuggingFaceModel(model_config).init_model()
+                llm = ModelFactory(model_config).init_model()
 
             # free up memory...
             del llm
