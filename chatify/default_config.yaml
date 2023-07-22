@@ -8,9 +8,11 @@ feedback: False
 
 model_config:
   open_ai_key: null
-  model: huggingface_model
-  model_name: bigscience/bloomz-560m
-  max_tokens: 2000
+  model: llama
+  model_name: TheBloke/Llama-2-13B-chat-GGML
+  max_tokens: 1024
+  n_gpu_layers: 40
+  n_batch: 512
 
 chain_config:
   chain_type: default
