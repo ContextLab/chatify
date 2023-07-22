@@ -9,8 +9,8 @@ feedback: False
 model_config:
   open_ai_key: null
   model: llama_model
-  model_name: TheBloke/Llama-2-13B-chat-GGML
-  weights_fname: llama-2-13b-chat.ggmlv3.q5_1.bin
+  model_name: TheBloke/Llama-2-7B-Chat-GGML
+  weights_fname: llama-2-7b-chat.ggmlv3.q5_1.bin
   max_tokens: 1024
   n_gpu_layers: 40
   n_batch: 512
