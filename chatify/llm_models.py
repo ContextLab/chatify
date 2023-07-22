@@ -301,7 +301,6 @@ class LlamaModel(BaseLLMModel):
         None
         """        
         super().__init__(model_config)
-        self.model_path = hf_hub_download(repo_id=self.model_config['model_name'], filename=self.model_config['weights_fname'])
         
 
     def init_model(self):
@@ -311,7 +310,8 @@ class LlamaModel(BaseLLMModel):
         -------
         llm_model : HuggingFaceModel
             Initialized Hugging Face Chat Model.
-        """        
+        """
+        self.model_path = hf_hub_download(repo_id=self.model_config['model_name'], filename=self.model_config['weights_fname'])
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
