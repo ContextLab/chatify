@@ -317,7 +317,7 @@ class LlamaModel(BaseLLMModel):
 
             try:
                 llm = LlamaCpp(
-                    model_path=model_path,
+                    model_path=self.model_config['model_name'],
                     max_tokens=self.model_config['max_tokens'],
                     n_gpu_layers=self.model_config['n_gpu_layers'],                    
                     n_batch=self.model_config['n_batch'],
