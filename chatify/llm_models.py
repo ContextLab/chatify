@@ -301,6 +301,7 @@ class LlamaModel(BaseLLMModel):
         None
         """        
         super().__init__(model_config)
+        self.model_path = hf_hub_download(repo_id=self.model_config['model_name'], filename=self.model_config['weights_fname'])
         
 
     def init_model(self):
@@ -310,28 +311,27 @@ class LlamaModel(BaseLLMModel):
         -------
         llm_model : HuggingFaceModel
             Initialized Hugging Face Chat Model.
-        """
-        model_path = hf_hub_download(repo_id=self.model_config['model_name'], filename=self.model_config['weights_fname'])
+        """        
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+            #callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
             try:
                 llm = LlamaCpp(
-                    model_path=model_path,
+                    model_path=self.model_path,
                     max_tokens=self.model_config['max_tokens'],
                     n_gpu_layers=self.model_config['n_gpu_layers'],                    
                     n_batch=self.model_config['n_batch'],
-                    callback_manager=callback_manager,
+                    #callback_manager=callback_manager,
                     verbose=False
                 )
             except:
                 llm = LlamaCpp(
-                    model_path=model_path,
+                    model_path=self.model_path,
                     max_tokens=self.model_config['max_tokens'],                    
                     n_batch=self.model_config['n_batch'],
-                    callback_manager=callback_manager,
+                    #callback_manager=callback_manager,
                     verbose=False
                 )
         return llm
