@@ -52,8 +52,8 @@ class Chatify(Magics):
 
         # download local model if needed
         model_config = self.cfg["model_config"]
-        if model_config["model"] == "huggingface_model":
-            print('Downloading model from HuggingFace for local use; this may take a few minutes...')
+        if model_config["model"] in ["huggingface_model", "llama_model"]":
+            print('Downloading model for local use; this may take a few minutes...')
 
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
