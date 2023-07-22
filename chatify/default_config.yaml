@@ -8,7 +8,7 @@ feedback: False
 
 model_config:
   open_ai_key: null
-  model: llama
+  model: llama_model
   model_name: TheBloke/Llama-2-13B-chat-GGML
   max_tokens: 1024
   n_gpu_layers: 40
