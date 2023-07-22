@@ -13,7 +13,7 @@ from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
 from .utils import check_dev_config
-from .llm_models import HuggingFaceModel
+from .llm_models import ModelsFactory
 
 
 @magics_class
@@ -57,7 +57,7 @@ class Chatify(Magics):
 
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                llm = ModelFactory(model_config).init_model()
+                llm = ModelsFactory(model_config).init_model()
 
             # free up memory...
             del llm
