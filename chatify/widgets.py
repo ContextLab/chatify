@@ -73,6 +73,6 @@ def text_widget():
         HTMLMath widget for displaying text.
     """
     text = widgets.HTMLMath(
-        value='', placeholder='', description='', style=dict(font_size='14px')
+        value='', placeholder='', description='', style=dict(font_size='12px')
     )
     return text
