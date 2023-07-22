@@ -326,7 +326,7 @@ class LlamaModel(BaseLLMModel):
                 )
             except:
                 llm = LlamaCpp(
-                    model_path=model_path,
+                    model_path=self.model_config['model_name'],
                     max_tokens=self.model_config['max_tokens'],                    
                     n_batch=self.model_config['n_batch'],
                     callback_manager=callback_manager,
