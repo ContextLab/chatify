@@ -8,10 +8,11 @@ A python package that enables ipython magic commands to Jupyter notebooks that p
 
 # Background
 
-This tool was created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version, we've used [ChatGPT](https://chat.openai.com/chat) to pre-generate and cache responses for all of the current NeuroMatch materials.  The cached responses are included by default when you install chatify in your environment, so running queries using those materials does not require any additional setup (nor do you need an OpenAI API key).  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
+This tool was created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version and enable support for the widest audience, we use [the smallest (7B parameter) variant of Meta's Llama 2 model](https://huggingface.co/meta-llama/Llama-2-7b) as the default model.  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
 
-## Installing and enabling Chatify: default (non-interactive) Neuromatch version
-To install and enable chatify in any Neuromatch tutorial notebook, add the following two cells to the top of your notebook (and run them):
+## Installing and enabling Chatify
+
+To install and enable chatify in any Jupyter notebook, add the following two cells to the top of your notebook (and run them):
 
 ```python
 %pip install davos
@@ -26,16 +27,22 @@ smuggle chatify   # pip: git+https://github.com/ContextLab/chatify.git
 
 No further setup is required.  To use Chatify to automatically explain any code in the notebook, simply insert the `%%explain` magic command at the top of the code cell and then run it (shift + enter) to access the Chatify interface for receiving LLM-based assistance.  To disable Chatify and run the code block as usual, simply delete the `%%explain` command and re-run the cell.
 
-## Installing and enabling Chatify: interactive version
+## Customizing Chatify
 
-By default, Chatify only supports cached responses.  To enable full-on interactive mode (and in arbitrary notebooks, including non-Neuromatch notebooks), you'll first need an [OpenAI API key](https://help.openai.com/en/collections/3675940-getting-started-with-openai-api).  Once you have your key, create a `config.yaml` file in the directory where your notebook is located.  Replace `<OPENAI API KEY>` with your actual OpenAI API key (with no quotes) and then save the following in your `config.yaml` file:
+Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself.
+
+For setups with additional resources, it is possible to switch to better-performing models.  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
+
+Once you have your API key(s), if needed, create a `config.yaml` file in the directory where you launch your notebook.  Replace `<API KEY>` with your actual Hugging Face or OpenAI API key (with no quotes) and then save the following in your `config.yaml` file:
+
+### OpenAI configuration
 
 ```yaml
 cache_config:
-  cache: True
+  cache: False
   caching_strategy: exact  # alternative: similarity
   cache_db_version: 0.1
-  url: https://www.dropbox.com/scl/fi/tpyl4hcrti63vvy0v6wm4/NMA_2023_v0.1.cache?rlkey=w5orop5qvmsl1u3hi96xtv5fu&dl=1
+  url: <URL> # ignore this
 
 feedback: False
 
@@ -49,10 +56,63 @@ chain_config:
   chain_type: default
 
 prompts_config:
-  prompts_to_use: [tutor]
+  prompts_to_use: [tutor, tester, inventer, experimenter]
 ```
 
-After saving your `config.yaml` file, follow the "[**Installing and enabling Chatify: default (non-interactive) Neuromatch version**](README.md#installing-and-enabling-chatify-default-non-interactive-neuromatch-version)" instructions.  Note that any non-cached responses you request will use your OpenAI API key to query ChatGPT, and your account will be billed accordingly.  We recommend enabling [usage limits](https://platform.openai.com/account/billing/limits) on your OpenAI account to prevent unexpected costs.
+### Hugging Face configuration (local)
+
+```yaml
+cache_config:
+  cache: False
+  caching_strategy: exact  # alternative: similarity
+  cache_db_version: 0.1
+  url: <URL> # ignore this
+
+feedback: False
+
+model_config:
+  open_ai_key: <OPENAI API KEY>
+  model: huggingface_model
+  model_name: TheBloke/Llama-2-70B-Chat-GGML  # replace with any text-generation model
+  max_tokens: 1024
+  n_gpu_layers: 40
+  n_batch: 512
+
+chain_config:
+  chain_type: default
+
+prompts_config:
+  prompts_to_use: [tutor, tester, inventer, experimenter]
+```
+
+### Llama 2 configuration
+
+```yaml
+cache_config:
+  cache: False
+  caching_strategy: exact  # alternative: similarity
+  cache_db_version: 0.1
+  url: <URL> # ignore this
+
+feedback: False
+
+model_config:
+  open_ai_key: <OPENAI API KEY>
+  model: llama_model
+  model_name: TheBloke/Llama-2-70B-Chat-GGML  # can replace "70B" with either "7B" or "13B" in this line and the next
+  weights_fname: llama-2-70b-chat.ggmlv3.q5_1.bin
+  max_tokens: 1024
+  n_gpu_layers: 40
+  n_batch: 512
+
+chain_config:
+  chain_type: default
+
+prompts_config:
+  prompts_to_use: [tutor, tester, inventer, experimenter]
+```
+
+After saving your `config.yaml` file, follow the "[**Installing and enabling Chatify**](README.md#installing-and-enabling-chatify)" instructions.
 
 
 # What do I do if I have questions or problems?
