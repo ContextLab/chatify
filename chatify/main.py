@@ -53,17 +53,14 @@ class Chatify(Magics):
         # download local model if needed
         model_config = self.cfg["model_config"]
         if model_config["model"] in ["huggingface_model", "llama_model"]:
-            print('Downloading model for local use; this may take a few minutes...')
+            print('Downloading and initializing model; this may take a few minutes...')
 
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
                 if model_config["model"] == "huggingface_model":
                     llm = HuggingFaceModel(model_config).init_model()
                 elif model_config["model"] == "llama_model":
-                    llm = LlamaModel(model_config).init_model()
-            
-            # free up memory...
-            del llm
+                    llm = LlamaModel(model_config).init_model()            
 
     def _read_prompt_dir(self):
         """Reads prompt files from the dirname + '/prompts/' directory.
