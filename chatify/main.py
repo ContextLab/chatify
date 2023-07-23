@@ -2,6 +2,7 @@ import yaml
 import markdown
 
 import pathlib
+import warnings
 
 from IPython.display import display
 from IPython.core.magic import Magics, magics_class, cell_magic
@@ -12,6 +13,7 @@ from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
 from .utils import check_dev_config
+from .llm_models import HuggingFaceModel, LlamaModel
 
 
 @magics_class
@@ -32,22 +34,33 @@ class Chatify(Magics):
         try:
             # If we find the config file we assume that user is a dev
             self.cfg = yaml.load(open("./config.yaml"), Loader=yaml.SafeLoader)
-            print("config.yaml file found!")
+            print("config.yaml file found; using custom configuration.")
             # Check dev config file
             check_dev_config(self.cfg)
 
-        except FileNotFoundError:
+        except FileNotFoundError: 
             # If we don't find the user is an end-point user
             dirname = pathlib.Path(__file__).parent.resolve()
             self.cfg = yaml.load(
                 open(pathlib.Path(str(dirname) + "/default_config.yaml")),
                 Loader=yaml.SafeLoader,
             )
-            print("Using default configuration!")
 
         self.prompts_config = self.cfg["prompts_config"]
         self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
+
+        # download local model if needed
+        model_config = self.cfg["model_config"]
+        if model_config["model"] in ["huggingface_model", "llama_model"]:
+            print('Downloading and initializing model; this may take a few minutes...')
+
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                if model_config["model"] == "huggingface_model":
+                    llm = HuggingFaceModel(model_config).init_model()
+                elif model_config["model"] == "llama_model":
+                    llm = LlamaModel(model_config).init_model()            
 
     def _read_prompt_dir(self):
         """Reads prompt files from the dirname + '/prompts/' directory.
@@ -204,12 +217,12 @@ class Chatify(Magics):
 
         # Name the tabs components
         for i, prompt_type in enumerate(self.prompt_types.keys()):
-            self.tabs.set_title(i, prompt_type.title())
+            self.tabs.set_title(i, 'Robo-' + prompt_type.lower())
             self.texts[prompt_type].value = ""
 
         # Create a tab group
         accordion = widgets.Accordion(children=[self.tabs])
-        accordion.set_title(0, "Chatify " + "\U0001F916")
+        accordion.set_title(0, "🤖💬")
         display(accordion)
 
         # Button click

@@ -1,18 +1,22 @@
 cache_config:
-  cache: True
+  cache: False
   caching_strategy: exact # or similarity
   cache_db_version: 0.1
-  url: https://www.dropbox.com/scl/fi/tpyl4hcrti63vvy0v6wm4/NMA_2023_v0.1.cache?rlkey=w5orop5qvmsl1u3hi96xtv5fu&dl=1
+  url: null
 
 feedback: False
 
 model_config:
   open_ai_key: null
-  model: cached_model
-  model_name: gpt-3.5-turbo # text-curie-001
+  model: llama_model
+  model_name: TheBloke/Llama-2-7B-Chat-GGML
+  weights_fname: llama-2-7b-chat.ggmlv3.q5_1.bin
+  max_tokens: 1024
+  n_gpu_layers: 40
+  n_batch: 512
 
 chain_config:
   chain_type: default
 
 prompts_config:
-  prompts_to_use: [tutor]
+  prompts_to_use: [tutor, tester, inventer, experimenter]

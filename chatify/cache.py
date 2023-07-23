@@ -1,5 +1,3 @@
-import os
-
 from gptcache.adapter.langchain_models import LangChainLLMs
 from gptcache import Cache
 from gptcache.processor.pre import get_prompt
@@ -39,8 +37,6 @@ class LLMCacher:
 
         if self.cache_config['url'] is not None:
             download_cache_database(self.cache_config)
-        else:
-            print(f'Creating a new cache file: NMA_2023_v{cache_db_version}.cache')
 
     def cache_llm(self, llm, *args, **kwargs):
         """Caches the LLM using the specified caching strategy.

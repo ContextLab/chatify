@@ -18,7 +18,7 @@ def option_widget(config):
     options = widgets.Dropdown(
         options=keys,
         value=keys[0],
-        description='Options:',
+        description='I\'d like to ',
     )
     return options
 
@@ -32,10 +32,10 @@ def button_widget():
         Button widget.
     """
     button = widgets.Button(
-        description='Explain',
+        description='Submit request',
         disabled=False,
         button_style='',
-        tooltip='Get',
+        tooltip='Press the button to generate a response!',
         icon='fa-comments',
     )
     return button
@@ -73,6 +73,6 @@ def text_widget():
         HTMLMath widget for displaying text.
     """
     text = widgets.HTMLMath(
-        value='', placeholder='', description='', style=dict(font_size='14px')
+        value='', placeholder='', description='', style=dict(font_size='12px')
     )
     return text

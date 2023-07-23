@@ -11,7 +11,7 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['gptcache>=0.1.35', 'langchain>=0.0.226', 'openai>=0.27.8', 'markdown>=3.4.3', 'ipywidgets>=7.7.1']
+requirements = ['gptcache', 'langchain', 'openai', 'markdown', 'ipywidgets', 'transformers', 'torch>=2.0', 'tensorflow>=2.0', 'flax', 'einops', 'accelerate', 'xformers', 'bitsandbytes', 'sentencepiece', 'llama-cpp-python']
 
 test_requirements = [
     'pytest>=3',
@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="A python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to markdown and code cells.",
+    description="A python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to code cells.",
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
@@ -44,6 +44,6 @@ setup(
     tests_require=test_requirements,
     package_data={'': ['**/*.yaml']},
     url='https://github.com/ContextLab/chatify',
-    version='0.1.0',
+    version='0.1.1',
     zip_safe=False,
 )
