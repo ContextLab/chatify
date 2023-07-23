@@ -30,8 +30,25 @@ class CreateLLMChain:
 
         self.cache = config['cache_config']['cache']
         self.cacher = LLMCacher(config)
+
+        # Setup model and chain factory
+        self._setup_llm_model(config['model_config'])
         self._setup_chain_factory()
+
         return None
+
+    def _setup_llm_model(self, model_config):
+        """Sets up the LLM model.
+
+        Returns
+        --------
+        None
+        """
+        if self.llm_model is None:
+            self.llm_model = self.llm_models_factory.get_model(model_config)
+
+            if self.cache:
+                self.llm_model = self.cacher.cache_llm(self.llm_model)
 
     def _setup_chain_factory(self):
         """Sets up the chain factory dictionary.
@@ -58,7 +75,7 @@ class CreateLLMChain:
         )
         return PROMPT
 
-    def create_chain(self, model_config, prompt_template):
+    def create_chain(self, model_config=None, prompt_template=None):
         """Creates an LLM chain based on the model configuration and prompt template.
 
         Parameters
@@ -70,11 +87,6 @@ class CreateLLMChain:
         -------
         chain (LLMChain): LLM chain object.
         """
-        if self.llm_model is None:
-            self.llm_model = self.llm_models_factory.get_model(model_config)
-
-            if self.cache:
-                self.llm_model = self.cacher.cache_llm(self.llm_model)
 
         try:
             chain_type = self.chain_config['chain_type']
