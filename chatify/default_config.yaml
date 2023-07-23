@@ -19,4 +19,4 @@ chain_config:
   chain_type: default
 
 prompts_config:
-  prompts_to_use: [tutor]
+  prompts_to_use: [tutor, tester, inventer, experimenter]

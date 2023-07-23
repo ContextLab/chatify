@@ -220,12 +220,12 @@ class Chatify(Magics):
 
         # Name the tabs components
         for i, prompt_type in enumerate(self.prompt_types.keys()):
-            self.tabs.set_title(i, 'Robo-' + prompt_type.lower() + ' 🤖')
+            self.tabs.set_title(i, 'Robo-' + prompt_type.lower())
             self.texts[prompt_type].value = ""
 
         # Create a tab group
         accordion = widgets.Accordion(children=[self.tabs])
-        #accordion.set_title(0, "🤖💬")
+        accordion.set_title(0, "🤖💬")
         display(accordion)
 
         # Button click
