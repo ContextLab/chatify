@@ -1,18 +1,18 @@
 # Chatify 🤖
 [![DOI](https://zenodo.org/badge/627651845.svg)](https://zenodo.org/badge/latestdoi/627651845)
 
-A python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to markdown and code cells.  This package is currently in the *alpha* stage: expect broken things, crashes, bad (wrong, misleading) answers, and other issues.
+Chatify is a python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to markdown and code cells.  This package is currently in the *alpha* stage: expect broken things, crashes, bad (wrong, misleading) answers, and other serious issues.  That said, we think Chatify is pretty neat even in this early form, and we're excited about its future!
 
 ![Image credit: DALL-E-2; prompt: robotic tutor helping a human student learn to program, science fiction, detailed rendering, futuristic, exquisite detail, graphic artist](https://github.com/ContextLab/chatify/assets/9030494/e3b928e1-f683-44a5-af1e-5c51e3f0e541)
 
 
 # Background
 
-This tool was created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version and enable support for the widest audience, we use [the smallest (7B parameter) variant of Meta's Llama 2 model](https://huggingface.co/meta-llama/Llama-2-7b) as the default model.  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
+This tool was originally created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  To reign in costs in this initial version and enable support for the widest audience, we use [the smallest (7B parameter) variant of Meta's Llama 2 model](https://huggingface.co/meta-llama/Llama-2-7b) as the default model.  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
 
 ## Installing and enabling Chatify
 
-To install and enable chatify in any Jupyter notebook, add the following two cells to the top of your notebook (and run them):
+To install and enable chatify in any Jupyter (iPython) notebook, add the following two cells to the top of your notebook (and run them):
 
 ```python
 %pip install davos
@@ -25,15 +25,15 @@ smuggle chatify   # pip: git+https://github.com/ContextLab/chatify.git
 %load_ext chatify
 ```
 
-No further setup is required.  To use Chatify to automatically explain any code in the notebook, simply insert the `%%explain` magic command at the top of the code cell and then run it (shift + enter) to access the Chatify interface for receiving LLM-based assistance.  To disable Chatify and run the code block as usual, simply delete the `%%explain` command and re-run the cell.
+No further setup is required.  To interact with Chatify about any code in the notebook, simply insert the `%%explain` magic command at the top of the code cell and then run it (shift + enter) to access the Chatify interface.  To disable Chatify and run the code block as usual, just delete the `%%explain` command and re-run the cell (e.g., by pressing shift + enter again).
 
 ## Customizing Chatify
 
 Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself.
 
-For setups with additional resources, it is possible to switch to better-performing models.  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
+Chatify is designed to work on a variety of systems and setups, including the "free" tiers on Google Colaboratory and Kaggle.  For setups with additional resources, it is possible to switch to better-performing models.  Chatify works on CPU-only environments, but is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
 
-Once you have your API key(s), if needed, create a `config.yaml` file in the directory where you launch your notebook.  Replace `<API KEY>` with your actual Hugging Face or OpenAI API key (with no quotes) and then save the following in your `config.yaml` file:
+Once you have your API key(s), if needed, create a `config.yaml` file in the directory where you launch your notebook.  For the OpenAI configuration, replace `<OPANAI API KEY>` with your actual OpenAI API key (with no quotes) and then create a `config.yaml` file with the following contents:
 
 ### OpenAI configuration
 
@@ -50,7 +50,7 @@ model_config:
   open_ai_key: <OPENAI API KEY>
   model: open_ai_model
   model_name: gpt-4  # alternative: for debugging consider using gpt-3.5-turbo (cheaper and faster, but lower-quality responses)
-  max_tokens: 2500
+  max_tokens: 1024
 
 chain_config:
   chain_type: default
