@@ -159,7 +159,7 @@ class Chatify(Magics):
         )
 
         output = self.llm_chain.execute(chain, inputs["cell"])
-        return markdown.markdown(output.replace("\n", "\n\n")"))  # hack for fixing rendering issue: https://github.com/microsoft/vscode-jupyter/issues/9620
+        return markdown.markdown(output.replace("\n", "\n\n"))  # hack for fixing rendering issue: https://github.com/microsoft/vscode-jupyter/issues/9620
 
     def update_values(self, *args, **kwargs):
         """Updates the values of UI elements based on the selected options.
