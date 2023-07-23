@@ -73,11 +73,12 @@ class Chatify(Magics):
         dirname = pathlib.Path(__file__).parent.resolve()
         prompt_files = list(pathlib.Path(str(dirname) + "/prompts/").glob("*.yaml"))
         prompt_types = {}
-        for f in prompt_files:
-            if f.name.split(".")[0] in self.prompts_config["prompts_to_use"]:
-                prompt_types[f.name.split(".")[0]] = yaml.load(
-                    open(f), Loader=yaml.SafeLoader
-                )
+        for f in self.prompts_config["prompts_to_use"]:
+            for prompt_file in prompt_files:
+                if f == prompt_file.name.split(".")[0]:
+                    prompt_types[f] = yaml.load(
+                        open(prompt_file), Loader=yaml.SafeLoader
+                    )
         return prompt_types
 
     def _create_ui_elements(self):
