@@ -50,7 +50,7 @@ model_config:
   open_ai_key: <OPENAI API KEY>
   model: open_ai_model
   model_name: gpt-3.5-turbo
-  max_tokens: 1024
+  max_tokens: 2500
 
 chain_config:
   chain_type: default
@@ -74,7 +74,7 @@ model_config:
   open_ai_key: <OPENAI API KEY>
   model: huggingface_model
   model_name: TheBloke/Llama-2-70B-Chat-GGML  # replace with any text-generation model
-  max_tokens: 1024
+  max_tokens: 2500
   n_gpu_layers: 40
   n_batch: 512
 
@@ -101,7 +101,7 @@ model_config:
   model: llama_model
   model_name: TheBloke/Llama-2-70B-Chat-GGML  # can replace "70B" with either "7B" or "13B" in this line and the next
   weights_fname: llama-2-70b-chat.ggmlv3.q5_1.bin
-  max_tokens: 1024
+  max_tokens: 2500
   n_gpu_layers: 40
   n_batch: 512
 
