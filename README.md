@@ -37,6 +37,8 @@ Once you have your API key(s), if needed, create a `config.yaml` file in the dir
 
 ### OpenAI configuration
 
+If you have an OpenAI API key, adding this config.yaml file to your local directory (after adding your API key) will substantially improve your experience:
+
 ```yaml
 cache_config:
   cache: False
@@ -49,34 +51,8 @@ feedback: False
 model_config:
   open_ai_key: <OPENAI API KEY>
   model: open_ai_model
-  model_name: gpt-4  # alternative: for debugging consider using gpt-3.5-turbo (cheaper and faster, but lower-quality responses)
-  max_tokens: 1024
-
-chain_config:
-  chain_type: default
-
-prompts_config:
-  prompts_to_use: [tutor, tester, inventer, experimenter]
-```
-
-### Hugging Face configuration (local)
-
-```yaml
-cache_config:
-  cache: False
-  caching_strategy: exact  # alternative: similarity
-  cache_db_version: 0.1
-  url: <URL> # ignore this
-
-feedback: False
-
-model_config:
-  open_ai_key: <OPENAI API KEY>
-  model: huggingface_model
-  model_name: TheBloke/Llama-2-70B-Chat-GGML  # replace with any text-generation model
-  max_tokens: 1024
-  n_gpu_layers: 40
-  n_batch: 512
+  model_name: gpt-3.5-turbo
+  max_tokens: 2500
 
 chain_config:
   chain_type: default
@@ -86,6 +62,9 @@ prompts_config:
 ```
 
 ### Llama 2 configuration
+
+If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free!  The 7B and 13B variants of llama 2 both run on the free tier of Google Colaboratory and Kaggle, but the 13B is substantially slower (hence we use the 7B variant by default).
+Note that you don't need to fill in the OpenAI API key; you can just leave it as placeholder text.
 
 ```yaml
 cache_config:
@@ -99,9 +78,37 @@ feedback: False
 model_config:
   open_ai_key: <OPENAI API KEY>
   model: llama_model
-  model_name: TheBloke/Llama-2-70B-Chat-GGML  # can replace "70B" with either "7B" or "13B" in this line and the next
+  model_name: TheBloke/Llama-2-70B-Chat-GGML  # can also replace "70B" with either "7B" or "13B" on this line and the next
   weights_fname: llama-2-70b-chat.ggmlv3.q5_1.bin
-  max_tokens: 1024
+  max_tokens: 2500
+  n_gpu_layers: 40
+  n_batch: 512
+
+chain_config:
+  chain_type: default
+
+prompts_config:
+  prompts_to_use: [tutor, tester, inventer, experimenter]
+```
+
+### Hugging Face configuration (local)
+
+If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free! This will likely require lots of RAM.  It's a nice way to explore a wide variety of models.  Note that you don't need to fill in the OpenAI API key; you can just leave it as placeholder text.
+
+```yaml
+cache_config:
+  cache: False
+  caching_strategy: exact  # alternative: similarity
+  cache_db_version: 0.1
+  url: <URL> # ignore this
+
+feedback: False
+
+model_config:
+  open_ai_key: <OPENAI API KEY>
+  model: huggingface_model
+  model_name: TheBloke/Llama-2-70B-Chat-GGML  # replace with any text-generation model on Hugging Face!
+  max_tokens: 2500
   n_gpu_layers: 40
   n_batch: 512
 
