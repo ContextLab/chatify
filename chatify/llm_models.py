@@ -8,7 +8,11 @@ with warnings.catch_warnings():  # catch warnings about accelerate library
     from langchain.chat_models import ChatOpenAI
     from langchain.callbacks.manager import CallbackManager
     from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-    from huggingface_hub import hf_hub_download
+
+    try:
+        from huggingface_hub import hf_hub_download
+    except ModuleNotFoundError:
+        hf_hub_download = None  # ignore missing library unless needed later
 
 from .utils import FakeListLLM
 
