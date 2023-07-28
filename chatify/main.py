@@ -47,8 +47,7 @@ class Chatify(Magics):
 
         self.prompts_config = self.cfg["prompts_config"]
 
-        model_config = self.config["model_config"]  # prime the lazy loader
-        if model_config['model'] != 'proxy':
+        if self.cfg['model_config']['model'] != 'proxy':
             self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
 
@@ -144,8 +143,7 @@ class Chatify(Magics):
         output : str
             The GPT model output in markdown format.
         """
-        model_config = self.config["model_config"]  # prime the lazy loader
-        if model_config['model'] != 'proxy':
+        if self.cfg['model_config']['model'] != 'proxy':
             chain = self.llm_chain.create_chain(
                 self.cfg["model_config"], prompt_template=prompt
             )
@@ -155,26 +153,21 @@ class Chatify(Magics):
             headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
             data = {'user_text': inputs["cell"]}
 
-            base_url = model_config['proxy'] + ':' + model_config['port'] + '/'
-            prompt_id = self.get_prompt_id(prompt)
+            base_url = self.cfg['model_config']['proxy']
+            if base_url[-1] != '/':
+                base_url += '/'
 
+            prompt_id = prompt['prompt_id']
             if prompt_id is None:
                 output = 'The requested prompt is not available. Please select another option from the menu and try your request again.'
             else:
                 combined_url = base_url + prompt_id + '/response'
 
-                response = requests.post(combined_url, headers=headers, data=data)
-                output = response.content
+                response = requests.post(combined_url, headers=headers, json=data)
+                output = eval(response.content.decode('utf-8'))
         
         return markdown.markdown(output.replace("\n", "\n\n"))
     
-    def get_prompt_id(self, prompt):
-        prompts = self._read_prompt_dir()
-        for options in prompts.values():
-            for x in options.values():
-                if x['content'] == prompt:
-                    return x['prompt_id']
-        return None
 
     def update_values(self, *args, **kwargs):
         """Updates the values of UI elements based on the selected options.
@@ -239,6 +232,8 @@ class Chatify(Magics):
         # Create a tab group
         accordion = widgets.Accordion(children=[self.tabs])
         accordion.set_title(0, "🤖💬")
+        accordion.layout.collapsed = False
+
         display(accordion)
 
         # Button click

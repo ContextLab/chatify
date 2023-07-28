@@ -7,13 +7,8 @@ cache_config:
 feedback: False
 
 model_config:
-  open_ai_key: null
-  model: llama_model
-  model_name: TheBloke/Llama-2-7B-Chat-GGML
-  weights_fname: llama-2-7b-chat.ggmlv3.q5_1.bin
-  max_tokens: 2048
-  n_gpu_layers: 40
-  n_batch: 512
+  model: proxy
+  proxy: https://chatify.experiments.kordinglab.com/prompt/
 
 chain_config:
   chain_type: default

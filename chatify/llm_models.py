@@ -54,13 +54,13 @@ class ModelsFactory:
 
         # Collect all the models
         models = {
-            'open_ai_model': OpenAIModel(model_config),
-            'open_ai_chat_model': OpenAIChatModel(model_config),
-            'fake_model': FakeLLMModel(model_config),
-            'cached_model': CachedLLMModel(model_config),
-            'huggingface_model': HuggingFaceModel(model_config),
-            'llama_model': LlamaModel(model_config),
-            'proxy_model': 'USE_PROXY',
+            'open_ai_model': OpenAIModel,
+            'open_ai_chat_model': OpenAIChatModel,
+            'fake_model': FakeLLMModel,
+            'cached_model': CachedLLMModel,
+            'huggingface_model': HuggingFaceModel,
+            'llama_model': LlamaModel,
+            'proxy': 'USE_PROXY',
         }
 
         if model_ in models.keys():
@@ -69,7 +69,7 @@ class ModelsFactory:
                 if type(models[model_]) == str:
                     return models[model_]
                 else:
-                    return models[model_].init_model()
+                    return models[model_](model_config).init_model()
         else:
             raise RuntimeError(f"{model_} is not supported yet!")
 
