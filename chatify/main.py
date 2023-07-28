@@ -2,7 +2,7 @@ import yaml
 import markdown
 
 import pathlib
-import warnings
+import requests
 
 from IPython.display import display
 from IPython.core.magic import Magics, magics_class, cell_magic
@@ -46,7 +46,10 @@ class Chatify(Magics):
             )
 
         self.prompts_config = self.cfg["prompts_config"]
-        self.llm_chain = CreateLLMChain(self.cfg)
+
+        model_config = self.config["model_config"]  # prime the lazy loader
+        if model_config['model'] != 'proxy':
+            self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
 
     def _read_prompt_dir(self):
@@ -141,12 +144,37 @@ class Chatify(Magics):
         output : str
             The GPT model output in markdown format.
         """
-        chain = self.llm_chain.create_chain(
-            self.cfg["model_config"], prompt_template=prompt
-        )
+        model_config = self.config["model_config"]  # prime the lazy loader
+        if model_config['model'] != 'proxy':
+            chain = self.llm_chain.create_chain(
+                self.cfg["model_config"], prompt_template=prompt
+            )
 
-        output = self.llm_chain.execute(chain, inputs["cell"])
-        return markdown.markdown(output.replace("\n", "\n\n"))  # hack for fixing rendering issue: https://github.com/microsoft/vscode-jupyter/issues/9620
+            output = self.llm_chain.execute(chain, inputs["cell"])
+        else:
+            headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
+            data = {'user_text': inputs["cell"]}
+
+            base_url = model_config['proxy'] + ':' + model_config['port'] + '/'
+            prompt_id = self.get_prompt_id(prompt)
+
+            if prompt_id is None:
+                output = 'The requested prompt is not available. Please select another option from the menu and try your request again.'
+            else:
+                combined_url = base_url + prompt_id + '/response'
+
+                response = requests.post(combined_url, headers=headers, data=data)
+                output = response.content
+        
+        return markdown.markdown(output.replace("\n", "\n\n"))
+    
+    def get_prompt_id(self, prompt):
+        prompts = self._read_prompt_dir()
+        for options in prompts.values():
+            for x in options.values():
+                if x['content'] == prompt:
+                    return x['prompt_id']
+        return None
 
     def update_values(self, *args, **kwargs):
         """Updates the values of UI elements based on the selected options.

@@ -9,6 +9,7 @@ test my understanding with some open-ended questions:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: 90gwxu1n68pbc2193jy0fy5rp9yu6h9h
 
 test my understanding with a multiple-choice question:
   input_variables: ['text']
@@ -21,3 +22,4 @@ test my understanding with a multiple-choice question:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: cqeas35w0wzhvemd6vtduj0qcf8njo4b

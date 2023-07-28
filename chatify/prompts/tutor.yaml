@@ -9,6 +9,7 @@ understand what this code does:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: q44yic3bwec36ax3k04xrrp7h6bb4c2n
 
 get help with debugging:
   input_variables: ['text']
@@ -21,6 +22,7 @@ get help with debugging:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: ov0pewhmmuunqy8czmnij7f2svjrvk97
 
 see how you'd fill in this code:
   input_variables: ['text']
@@ -33,6 +35,7 @@ see how you'd fill in this code:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: 27ctupktel92cqo4zt12uolk2mlkd8gr
 
 learn more about related concepts:
   input_variables: ['text']
@@ -45,6 +48,7 @@ learn more about related concepts:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: r12wl0o6gq3gyk6baapt4wyjfyvwzkbc
 
 see another similar example:
   input_variables: ['text']
@@ -57,3 +61,4 @@ see another similar example:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: by966q56sw0j6vbxn8j3xqh07nz2ghkj
