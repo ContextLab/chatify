@@ -132,3 +132,4 @@ config.yaml
 # MacOS files
 .DS_Store
 */.DS_Store
+examples/debug.ipynb

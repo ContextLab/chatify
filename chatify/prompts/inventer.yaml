@@ -9,6 +9,7 @@ come up with some project ideas related to this code:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: dq1l7lmwgu35oi4d1z03vhdscirygio8
 
 
 brainstorm business ideas related to this code:
@@ -22,3 +23,4 @@ brainstorm business ideas related to this code:
 
     ASSISTANT: 
   template_format: f-string
+  prompt_id: kvrdjfiosl843shajunisdqqg8f6g467

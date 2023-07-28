@@ -66,7 +66,7 @@ def compress_code(text):
 
 def check_dev_config(config):
     # We assume that the dev config has openai api key
-    if config['model_config']['open_ai_key'] is None:
+    if ('open_ai' in config['model_config']['model']) and ('open_ai_key' not in config['model_config'] or config['model_config']['open_ai_key'] is None):
         raise KeyError('OpenAI API key cannot be empty')
 
 

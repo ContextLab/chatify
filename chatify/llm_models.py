@@ -4,10 +4,15 @@ import warnings
 with warnings.catch_warnings():  # catch warnings about accelerate library
     warnings.simplefilter("ignore")
     from langchain.llms import OpenAI, HuggingFacePipeline, LlamaCpp
+    from langchain.llms.base import LLM
     from langchain.chat_models import ChatOpenAI
     from langchain.callbacks.manager import CallbackManager
     from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-    from huggingface_hub import hf_hub_download
+
+    try:
+        from huggingface_hub import hf_hub_download
+    except ModuleNotFoundError:
+        hf_hub_download = None  # ignore missing library unless needed later
 
 from .utils import FakeListLLM
 
@@ -53,23 +58,27 @@ class ModelsFactory:
 
         # Collect all the models
         models = {
-            'open_ai_model': OpenAIModel(model_config),
-            'open_ai_chat_model': OpenAIChatModel(model_config),
-            'fake_model': FakeLLMModel(model_config),
-            'cached_model': CachedLLMModel(model_config),
-            'huggingface_model': HuggingFaceModel(model_config),
-            'llama_model': LlamaModel(model_config),
+            'open_ai_model': OpenAIModel,
+            'open_ai_chat_model': OpenAIChatModel,
+            'fake_model': FakeLLMModel,
+            'cached_model': CachedLLMModel,
+            'huggingface_model': HuggingFaceModel,
+            'llama_model': LlamaModel,
+            'proxy': 'USE_PROXY',
         }
 
         if model_ in models.keys():
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                return models[model_].init_model()
+                if type(models[model_]) == str:
+                    return models[model_]
+                else:
+                    return models[model_](model_config).init_model()
         else:
             raise RuntimeError(f"{model_} is not supported yet!")
 
 
-class BaseLLMModel:
+class BaseLLMModel(LLM):
     """Base class for Language Model (LLM) models."""
 
     def __init__(self, model_config) -> None:
@@ -267,6 +276,9 @@ class HuggingFaceModel(BaseLLMModel):
         llm_model : HuggingFaceModel
             Initialized Hugging Face Chat Model.
         """
+        self.proxy = self.model_config['proxy']
+        self.proxy_port = self.model_config['proxy_port']
+        
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -341,3 +353,8 @@ class LlamaModel(BaseLLMModel):
                     verbose=True,
                 )
         return llm
+
+
+
+        
+
