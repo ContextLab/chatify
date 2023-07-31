@@ -14,7 +14,10 @@ from langchain.llms.base import LLM
 def highlight_code(code, name, attrs):
     """Highlight a block of code"""
 
-    lexer = get_lexer_by_name(name)
+    try:
+      lexer = get_lexer_by_name(name)
+    except:
+      lexer = get_lexer_by_name('python')
     formatter = HtmlFormatter(cssclass='codehilite', linenos='table')
 
     return highlight(code, lexer, formatter)
