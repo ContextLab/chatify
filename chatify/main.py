@@ -48,6 +48,7 @@ class Chatify(Magics):
         if self.cfg['model_config']['model'] != 'proxy':
             self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
+        display.Pretty('🤖💬 Beep beep boop! Chatify is [ON]')
 
     def _read_prompt_dir(self):
         """Reads prompt files from the dirname + '/prompts/' directory.
