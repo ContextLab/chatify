@@ -1,5 +1,4 @@
 import yaml
-import markdown
 
 import pathlib
 import requests
@@ -12,8 +11,7 @@ import ipywidgets as widgets
 from .chains import CreateLLMChain
 from .widgets import option_widget, button_widget, text_widget, thumbs
 
-from .utils import check_dev_config
-
+from .utils import check_dev_config, get_html
 
 @magics_class
 class Chatify(Magics):
@@ -166,7 +164,7 @@ class Chatify(Magics):
                 response = requests.post(combined_url, headers=headers, json=data)
                 output = eval(response.content.decode('utf-8'))
         
-        return markdown.markdown(output.replace("\n", "\n\n"))
+        return get_html(output)
     
 
     def update_values(self, *args, **kwargs):
