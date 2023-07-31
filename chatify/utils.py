@@ -3,7 +3,39 @@ from typing import Any, List, Mapping, Optional
 import random
 import urllib
 
+from markdown_it import MarkdownIt
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
+from pygments import highlight
+
 from langchain.llms.base import LLM
+
+
+def highlight_code(code, name, attrs):
+    """Highlight a block of code"""
+
+    lexer = get_lexer_by_name(name)
+    formatter = HtmlFormatter(cssclass='codehilite', linenos='table')
+
+    return highlight(code, lexer, formatter)
+
+def get_html(markdown, code_style='default'):
+    """Return HTML string rendered from markdown source."""
+
+    md = MarkdownIt(
+        "js-default",
+        {
+            "linkify": True,
+            "html": True,
+            "typographer": True,
+            "highlight": highlight_code,
+        },
+    )
+
+    formatter = HtmlFormatter(style=code_style, linenos='table')
+    css = formatter.get_style_defs()
+
+    return f'<head><style>{css}</style></head>' + md.render(markdown)
 
 
 class FakeListLLM(LLM):

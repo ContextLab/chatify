@@ -29,9 +29,7 @@ No further setup is required.  To interact with Chatify about any code in the no
 
 ## Customizing Chatify
 
-Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself.
-
-Chatify is designed to work on a variety of systems and setups, including the "free" tiers on Google Colaboratory and Kaggle.  For setups with additional resources, it is possible to switch to better-performing or lower-cost models.  Chatify works in CPU-only environments, but is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
+Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself.  In addition to Colaboratory and Kaggle notebooks, Chatify also supports a variety of other systems and setups, including running locally or on other cloud-based systems.  For setups with additional resources, it is possible to switch to better-performing or lower-cost models.  Chatify works in CPU-only environments, but it is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
 
 Once you have your API key(s), if needed, create a `config.yaml` file in the directory where you launch your notebook.  For the OpenAI configuration, replace `<OPANAI API KEY>` with your actual OpenAI API key (with no quotes) and then create a `config.yaml` file with the following contents:
 
@@ -63,7 +61,7 @@ prompts_config:
 
 ### Llama 2 configuration
 
-If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free!  The 7B and 13B variants of llama 2 both run on the free tier of Google Colaboratory and Kaggle, but the 13B is substantially slower (hence we use the 7B variant by default). Note that using this configuration requires installing the "HuggingFace" dependencies (`pip install chatify[hf]`).
+If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free!  The 7B and 13B variants of llama 2 both run on the free tier of Google Colaboratory and Kaggle, but the 13B is substantially slower (therefore we recommend the 7B variant if you're using Colaboratory or Kaggle notebooks). Note that using this configuration requires installing the "HuggingFace" dependencies (`pip install chatify[hf]`).
 
 ```yaml
 cache_config:
