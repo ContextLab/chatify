@@ -3,7 +3,7 @@ import yaml
 import pathlib
 import requests
 
-from IPython.display import display
+from IPython.display import display, Pretty
 from IPython.core.magic import Magics, magics_class, cell_magic
 
 import ipywidgets as widgets
@@ -48,7 +48,7 @@ class Chatify(Magics):
         if self.cfg['model_config']['model'] != 'proxy':
             self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
-        display.Pretty('🤖💬 Beep beep boop! Chatify is [ON]')
+        Pretty('🤖💬 Beep beep boop! Chatify is [ON]')
 
     def _read_prompt_dir(self):
         """Reads prompt files from the dirname + '/prompts/' directory.
