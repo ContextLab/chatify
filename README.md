@@ -27,6 +27,24 @@ smuggle chatify   # pip: git+https://github.com/ContextLab/chatify.git
 
 No further setup is required.  To interact with Chatify about any code in the notebook, simply insert the `%%explain` magic command at the top of the code cell and then run it (shift + enter) to access the Chatify interface.  To disable Chatify and run the code block as usual, just delete the `%%explain` command and re-run the cell (e.g., by pressing shift + enter again).
 
+### Why those two cells?
+
+The first cell installs and enables the [Davos](https://github.com/ContextLab/davos) library, which is used to safely manage Python dependencies in Jupyter notebooks. Importing Davos provides access to the `smuggle` keyword.  The `smuggle` keyword is like a safer and more robust version of `import`; if the requested package isn't available in the current environment, it will be automatically installed and imported. Importantly, any newly installed packages are automatically isolated in a virtual environment.  This prevents Chatify or its dependencies from interfering with other packages that might be installed on your system.
+
+The `smuggle` statement in the second cell is what actually installs, configures, and imports Chatify, and the `%load_ext` line loads and enables the Chatify extension (accessed by adding the `%%explain` magic command to the top of any code cell in the notebook).
+
+If you like to live on the wild side and don't care about protecting your runtime environment from potential side effects of installing Chatify (note: this is **not recommended** and may **break other aspects of your setup**!), you can replace those two cells above with the following:
+
+```python
+!pip install -qqq git+https://github.com/ContextLab/chatify.git
+import chatify
+%load_ext chatify
+```
+
+### Why isn't Chatify on pip/conda?
+
+It will be soon!  We're doing some usability testing first.  We'll likely make the package installable via pip initially, and then "later on" (i.e., when someone requests it and/or we get around to it!) we'll add conda support too. For now, you're stuck with the bleeding edge "install directly from GitHub" option.
+
 ## Customizing Chatify
 
 Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself.  In addition to Colaboratory and Kaggle notebooks, Chatify also supports a variety of other systems and setups, including running locally or on other cloud-based systems.  For setups with additional resources, it is possible to switch to better-performing or lower-cost models.  Chatify works in CPU-only environments, but it is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
