@@ -13,6 +13,7 @@ from .widgets import option_widget, button_widget, text_widget, thumbs
 
 from .utils import check_dev_config, get_html
 
+
 @magics_class
 class Chatify(Magics):
     """A class for interactive chat functionality.
@@ -45,8 +46,7 @@ class Chatify(Magics):
 
         self.prompts_config = self.cfg["prompts_config"]
 
-        if self.cfg['model_config']['model'] != 'proxy':
-            self.llm_chain = CreateLLMChain(self.cfg)
+        self.llm_chain = CreateLLMChain(self.cfg)
         self.tabs = None
 
     def _read_prompt_dir(self):
@@ -115,7 +115,6 @@ class Chatify(Magics):
                 self.button,
             ]
         hbox = widgets.HBox(elements)
-
         vbox = widgets.VBox([hbox, self.texts[prompt_type]])
         return vbox
 
@@ -141,31 +140,13 @@ class Chatify(Magics):
         output : str
             The GPT model output in markdown format.
         """
-        if self.cfg['model_config']['model'] != 'proxy':
-            chain = self.llm_chain.create_chain(
-                self.cfg["model_config"], prompt_template=prompt
-            )
+        # TODO: Should we create the chain everytime? Only prompt is chainging not the model
+        chain = self.llm_chain.create_chain(
+            self.cfg["model_config"], prompt_template=prompt
+        )
+        output = self.llm_chain.execute(chain, inputs["cell"])
 
-            output = self.llm_chain.execute(chain, inputs["cell"])
-        else:
-            headers = {'accept': 'application/json', 'Content-Type': 'application/json'}
-            data = {'user_text': inputs["cell"]}
-
-            base_url = self.cfg['model_config']['proxy']
-            if base_url[-1] != '/':
-                base_url += '/'
-
-            prompt_id = prompt['prompt_id']
-            if prompt_id is None:
-                output = 'The requested prompt is not available. Please select another option from the menu and try your request again.'
-            else:
-                combined_url = base_url + prompt_id + '/response'
-
-                response = requests.post(combined_url, headers=headers, json=data)
-                output = eval(response.content.decode('utf-8'))
-        
         return get_html(output)
-    
 
     def update_values(self, *args, **kwargs):
         """Updates the values of UI elements based on the selected options.

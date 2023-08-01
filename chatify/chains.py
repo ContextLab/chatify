@@ -1,12 +1,65 @@
-import time
+from typing import Any, Dict, List, Optional
+
+import requests
+
 
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain, LLMMathChain
+from langchain.chains.base import Chain
+
+
+from typing import Any, Dict, Optional
+from langchain.callbacks.manager import CallbackManagerForChainRun
 
 from .llm_models import ModelsFactory
 from .cache import LLMCacher
 
 from .utils import compress_code
+
+
+class RequestChain(Chain):
+    llm_chain: LLMChain = None
+    prompt: Optional[Dict[str, Any]]
+    headers: Optional[Dict[str, str]] = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+    }
+    input_key: str = 'text'
+    url: str = "url"  #: :meta private:
+    output_key: str = "text"  #: :meta private:
+
+    @property
+    def input_keys(self) -> List[str]:
+        """Will be whatever keys the prompt expects.
+
+        :meta private:
+        """
+        return [self.input_key]
+
+    @property
+    def output_keys(self) -> List[str]:
+        """Will always return text key.
+
+        :meta private:
+        """
+        return [self.output_key]
+
+    def _call(
+        self,
+        inputs: Dict[str, Any],
+        run_manager: Optional[CallbackManagerForChainRun] = None,
+    ) -> Dict[str, Any]:
+        # Prepare data
+        if self.url != '/':
+            self.url += '/'
+        combined_url = self.url + self.prompt['prompt_id'] + '/response'
+        data = {'user_text': inputs[self.input_key]}
+
+        # Send the request
+        response = requests.post(url=combined_url, headers=self.headers, json=data)
+        output = eval(response.content.decode('utf-8'))
+
+        return {self.output_key: output}
 
 
 class CreateLLMChain:
@@ -23,6 +76,7 @@ class CreateLLMChain:
         -------
         None
         """
+        self.config = config
         self.chain_config = config['chain_config']
 
         self.llm_model = None
@@ -57,7 +111,11 @@ class CreateLLMChain:
         --------
         None
         """
-        self.chain_factory = {'math': LLMMathChain, 'default': LLMChain}
+        self.chain_factory = {
+            'math': LLMMathChain,
+            'default': LLMChain,
+            'proxy': RequestChain,
+        }
 
     def create_prompt(self, prompt):
         """Creates a prompt using a template and input variables.
@@ -87,15 +145,19 @@ class CreateLLMChain:
         -------
         chain (LLMChain): LLM chain object.
         """
+        if self.config['chain_config']['chain_type'] == 'proxy':
+            chain = RequestChain(
+                url=self.config['model_config']['proxy_url'], prompt=prompt_template
+            )
+        else:
+            try:
+                chain_type = self.chain_config['chain_type']
+            except KeyError:
+                chain_type = 'default'
 
-        try:
-            chain_type = self.chain_config['chain_type']
-        except KeyError:
-            chain_type = 'default'
-
-        chain = self.chain_factory[chain_type](
-            llm=self.llm_model, prompt=self.create_prompt(prompt_template)
-        )
+            chain = self.chain_factory[chain_type](
+                llm=self.llm_model, prompt=self.create_prompt(prompt_template)
+            )
         return chain
 
     def execute(self, chain, inputs, *args, **kwargs):
