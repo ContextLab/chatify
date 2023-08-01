@@ -64,7 +64,7 @@ class ModelsFactory:
             'cached_model': CachedLLMModel,
             'huggingface_model': HuggingFaceModel,
             'llama_model': LlamaModel,
-            'proxy': 'USE_PROXY',
+            'proxy': ProxyModel,
         }
 
         if model_ in models.keys():
@@ -78,7 +78,7 @@ class ModelsFactory:
             raise RuntimeError(f"{model_} is not supported yet!")
 
 
-class BaseLLMModel(LLM):
+class BaseLLMModel:
     """Base class for Language Model (LLM) models."""
 
     def __init__(self, model_config) -> None:
@@ -278,7 +278,6 @@ class HuggingFaceModel(BaseLLMModel):
         """
         self.proxy = self.model_config['proxy']
         self.proxy_port = self.model_config['proxy_port']
-        
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -355,6 +354,20 @@ class LlamaModel(BaseLLMModel):
         return llm
 
 
+class ProxyModel(BaseLLMModel):
+    def __init__(self, model_config) -> None:
+        """Initializes the model instance.
 
-        
+        Parameters
+        ----------
+        model_config : dict
+            Configuration for the model.
 
+        Returns
+        -------
+        None
+        """
+        super().__init__(model_config)
+
+    def init_model(self):
+        return None

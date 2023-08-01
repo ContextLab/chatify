@@ -15,12 +15,13 @@ def highlight_code(code, name, attrs):
     """Highlight a block of code"""
 
     try:
-      lexer = get_lexer_by_name(name)
+        lexer = get_lexer_by_name(name)
     except:
-      lexer = get_lexer_by_name('python')
+        lexer = get_lexer_by_name('python')
     formatter = HtmlFormatter(cssclass='codehilite', linenos='table')
 
     return highlight(code, lexer, formatter)
+
 
 def get_html(markdown, code_style='default'):
     """Return HTML string rendered from markdown source."""
@@ -101,7 +102,10 @@ def compress_code(text):
 
 def check_dev_config(config):
     # We assume that the dev config has openai api key
-    if ('open_ai' in config['model_config']['model']) and ('open_ai_key' not in config['model_config'] or config['model_config']['open_ai_key'] is None):
+    if ('open_ai' in config['model_config']['model']) and (
+        'open_ai_key' not in config['model_config']
+        or config['model_config']['open_ai_key'] is None
+    ):
         raise KeyError('OpenAI API key cannot be empty')
 
 

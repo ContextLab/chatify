@@ -8,10 +8,10 @@ feedback: False
 
 model_config:
   model: proxy
-  proxy: https://chatify.experiments.kordinglab.com/prompt/
+  proxy_url: https://chatify.experiments.kordinglab.com/prompt/
 
 chain_config:
-  chain_type: default
+  chain_type: proxy # default
 
 prompts_config:
   prompts_to_use: [tutor, tester, inventer, experimenter]
