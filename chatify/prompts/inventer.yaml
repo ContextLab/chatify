@@ -11,6 +11,8 @@ come up with some project ideas related to this code:
     {text}
     ---
 
+    Can you come up with a list of potential project ideas for me?
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: dq1l7lmwgu35oi4d1z03vhdscirygio8
@@ -28,6 +30,8 @@ brainstorm business ideas related to this code:
     ---
     {text}
     ---
+
+    Can you come up with a list of business ideas for me?
 
     ASSISTANT: 
   template_format: f-string

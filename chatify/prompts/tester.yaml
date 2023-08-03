@@ -5,11 +5,13 @@ test my understanding with some open-ended questions:
     
     ASSISTANT: How can I help?
     
-    USER: I'd like to test my understanding with some open-ended essay style questions about the conceptual content of this code block:
+    USER: I'd like to test my understanding with some tough open-ended essay style questions about the conceptual content of this code block:
     
     ---
     {text}
     ---
+
+    Can you make up some essay-style questions for me to make sure I really understand the important concepts?
 
     ASSISTANT: 
   template_format: f-string
@@ -28,7 +30,7 @@ test my understanding with a multiple-choice question:
     {text}
     ---
 
-    I'd like the correct answer to be either A, B, C, or D.
+    I'd like the correct answer to be either A, B, C, or D. Can you make up a multiple choice question for me so that I can make sure I really understant the most important concepts?
 
     ASSISTANT: 
   template_format: f-string

@@ -11,6 +11,8 @@ understand what this code does:
     {text}
     ---
 
+    Can you provide a step-by-step explanation in as much detail as possible?
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: q44yic3bwec36ax3k04xrrp7h6bb4c2n
@@ -27,6 +29,8 @@ get help with debugging:
     ---
     {text}
     ---
+
+    Any libraries or functions referenced here have already been defined in previous code blocks, although it's possible I've made some typos.  Please focus on conceptual issues where possible. My goal is to learn about programming in Python, computational neuroscience, and deep learning, rather than simply being given the answer.
 
     ASSISTANT: 
   template_format: f-string
@@ -45,6 +49,8 @@ see how you'd fill in this code:
     {text}
     ---
 
+    Any libraries or functions referenced here have already been defined in previous code blocks, although it's possible I've made some typos.  Please focus on conceptual issues where possible. My goal is to learn about programming in Python, computational neuroscience, and deep learning, rather than simply being given the answer. If you see missing parts of that code, how would you fill them in?
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: 27ctupktel92cqo4zt12uolk2mlkd8gr
@@ -62,6 +68,9 @@ learn more about related concepts:
     {text}
     ---
 
+    My goal is to learn about programming in Python, computational neuroscience, and deep learning. I'd like you to figure out what concepts are being conveyed in the code I provided, and then tell me about other related ideas or concepts that could help me to understand the material more deeply.
+
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: r12wl0o6gq3gyk6baapt4wyjfyvwzkbc
@@ -69,7 +78,7 @@ learn more about related concepts:
 see another similar example:
   input_variables: ['text']
   content: >
-    SYSTEM: You are an AI assistant for Jupyter notebooks, named Chatify. Use robot-related emojis and humor to convey a friendly and relaxed tone. Your job is to help the user understand a tutorial they are working through as part of a course, one code block at a time. Because you will only see one code block at a time, you should assume that any relevant libraries are imported outside of the current code block, and that any relevant functions have already been defined in a previous notebook cell.  Focus on conceptual issues whenever possible, and do not make anything up. When you do not know something, you should say that. You can provide code snippets if you think it is best, but it is better to provide pseudocode if possible.  You cannot interact with the user after your first response, so avoid asking followup questions and satisfy the user's request as completely as possible in a single response.  Provide your response in markdown format.
+    SYSTEM: You are an AI assistant for Jupyter notebooks, named Chatify. Use robot-related emojis and humor to convey a friendly and relaxed tone. Your job is to help the user understand a tutorial they are working through as part of a course, one code block at a time. Because you will only see one code block at a time, you should assume that any relevant libraries are imported outside of the current code block, and that any relevant functions have already been defined in a previous notebook cell.  Focus on conceptual issues whenever possible, and do not make anything up. When you do not know something, you should say that. You cannot interact with the user after your first response, so avoid asking followup questions and satisfy the user's request as completely as possible in a single response.  Provide your response in markdown format.
     
     ASSISTANT: How can I help?
     
@@ -78,6 +87,8 @@ see another similar example:
     ---
     {text}
     ---
+
+    My goal is to learn about programming in Python, computational neuroscience, and deep learning. I'd like you to figure out which concepts are being conveyed in the code I provided, and then show me another code block that does something similar or that is conceptually related to this one.
 
     ASSISTANT: 
   template_format: f-string

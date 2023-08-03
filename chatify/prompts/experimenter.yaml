@@ -11,6 +11,8 @@ come up with a machine learning experiment related to this code:
     {text}
     ---
 
+    Can you describe the machine learning experiment for me in as much detail as possible?
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: vd454cjgo9idrvu2r4fs9vc7lsud0ma6
@@ -27,6 +29,8 @@ come up with a computer science experiment related to this code:
     ---
     {text}
     ---
+
+    Can you describe the computer science experiment for me in as much detail as possible?
 
     ASSISTANT: 
   template_format: f-string
@@ -45,6 +49,8 @@ come up with a psychological experiment related to this code:
     {text}
     ---
 
+    Can you describe the psychology experiment for me in as much detail as possible?
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: na936s6p1mkjc7jsks8nx9uvncd7ko26
@@ -62,6 +68,8 @@ come up with a neuroscientific experiment related to this code:
     {text}
     ---
 
+    Can you describe the neuroscience experiment for me in as much detail as possible?
+
     ASSISTANT: 
   template_format: f-string
   prompt_id: vfzitiz0h105mnusgyu0xkhu3ylcehgo
@@ -78,6 +86,8 @@ come up with a climate science experiment related to this code:
     ---
     {text}
     ---
+
+    Can you describe the climate science experiment for me in as much detail as possible?
 
     ASSISTANT: 
   template_format: f-string
