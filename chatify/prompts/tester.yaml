@@ -11,7 +11,7 @@ test my understanding with some open-ended questions:
     {text}
     ---
 
-    Can you make up some essay-style questions for me to make sure I really understand the important concepts?
+    Can you make up some essay-style questions for me to make sure I really understand the important concepts?  Remember that I can't respond do you, so just ask me to "think about" which answers are correct or something else like that (i.e., without explicitly responding to you).
 
     ASSISTANT: 
   template_format: f-string
