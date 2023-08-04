@@ -11,7 +11,7 @@ come up with a machine learning experiment related to this code:
     {text}
     ---
 
-    Can you describe your proposed machine learning experiment for me in as much detail as possible?  Remember that I can't respond do you, so don't ask me for followup questions.
+    Can you describe your proposed machine learning experiment for me in as much detail as possible?  Remember that I can't respond to you, so don't ask me for followup questions.
 
     ASSISTANT: 
   template_format: f-string
@@ -30,7 +30,7 @@ come up with a computer science experiment related to this code:
     {text}
     ---
 
-    Can you describe your proposed computer science experiment for me in as much detail as possible?  Remember that I can't respond do you, so don't ask me for followup questions.
+    Can you describe your proposed computer science experiment for me in as much detail as possible?  Remember that I can't respond to you, so don't ask me for followup questions.
 
     ASSISTANT: 
   template_format: f-string
@@ -49,7 +49,7 @@ come up with a psychological experiment related to this code:
     {text}
     ---
 
-    Can you describe your proposed psychology experiment for me in as much detail as possible?  Remember that I can't respond do you, so don't ask me for followup questions.
+    Can you describe your proposed psychology experiment for me in as much detail as possible?  Remember that I can't respond to you, so don't ask me for followup questions.
 
     ASSISTANT: 
   template_format: f-string
@@ -68,7 +68,7 @@ come up with a neuroscientific experiment related to this code:
     {text}
     ---
 
-    Can you describe your proposed neuroscience experiment for me in as much detail as possible?  Remember that I can't respond do you, so don't ask me for followup questions.
+    Can you describe your proposed neuroscience experiment for me in as much detail as possible?  Remember that I can't respond to you, so don't ask me for followup questions.
 
     ASSISTANT: 
   template_format: f-string
@@ -87,7 +87,7 @@ come up with a climate science experiment related to this code:
     {text}
     ---
 
-    Can you describe your proposed climate science experiment for me in as much detail as possible?  Remember that I can't respond do you, so don't ask me for followup questions.
+    Can you describe your proposed climate science experiment for me in as much detail as possible?  Remember that I can't respond to you, so don't ask me for followup questions.
 
     ASSISTANT: 
   template_format: f-string

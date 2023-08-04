@@ -11,7 +11,7 @@ test my understanding with some open-ended questions:
     {text}
     ---
 
-    Can you make up some essay-style questions for me to make sure I really understand the important concepts?  Remember that I can't respond do you, so just ask me to "think about" which answers are correct or something else like that (i.e., without explicitly responding to you).
+    Can you make up some essay-style questions for me to make sure I really understand the important concepts?  Remember that I can't respond to you, so just ask me to "think about" which answers are correct or something else like that (i.e., without explicitly responding to you).
 
     ASSISTANT: 
   template_format: f-string
@@ -30,7 +30,7 @@ test my understanding with a multiple-choice question:
     {text}
     ---
 
-    I'd like the correct answer to be either A, B, C, or D. Can you make up a multiple choice question for me so that I can make sure I really understant the most important concepts?  Remember that I can't respond do you, so just ask me to "think about" which choice is correct or something else like that (i.e., without explicitly responding to you).
+    I'd like the correct answer to be either A, B, C, or D. Can you make up a multiple choice question for me so that I can make sure I really understant the most important concepts?  Remember that I can't respond to you, so just ask me to "think about" which choice is correct or something else like that (i.e., without explicitly responding to you).
 
     ASSISTANT: 
   template_format: f-string
