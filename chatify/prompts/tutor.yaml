@@ -49,7 +49,7 @@ see how you'd fill in this code:
     {text}
     ---
 
-    Any libraries or functions referenced here have already been defined in previous code blocks, although it's possible I've made some typos.  Please focus on conceptual issues where possible. My goal is to learn about programming in Python, computational neuroscience, and deep learning, rather than simply being given the answer. If you see missing parts of that code, how would you fill them in?  Remember that I can't respond to you, so don't ask me for followup questions.
+    Any libraries or functions referenced here have already been defined in previous code blocks, although it's possible I've made some typos.  Please focus on conceptual issues where possible. My goal is to learn about programming in Python, computational neuroscience, and deep learning, rather than simply being given the answer. If you see missing parts of that code, how would you fill them in?  Remember that I can't respond to you, so don't ask me if I have other questions. Just give the best response you can with the information I've provided and then wish me luck with my learning journey, or something else to that effect.
 
     ASSISTANT: 
   template_format: f-string
