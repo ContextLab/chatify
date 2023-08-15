@@ -30,7 +30,7 @@ test my understanding with a multiple-choice question:
     {text}
     ---
 
-    I'd like the correct answer to be either "(A)", "(B)", "(C)", or "(D)". Can you make up a multiple choice question for me so that I can make sure I really understant the most important concepts?  Remember that I can't respond to you, so just ask me to "think about" which choice is correct or something else like that (i.e., without explicitly responding to you). Put two line breaks ("<br>") between each choice so that it appears correctly on my screen. In other words, there should be two line breaks between each of (B), (C), and (D).
+    I'd like the correct answer to be either "(A)", "(B)", "&#40;C)", or "(D)". Can you make up a multiple choice question for me so that I can make sure I really understant the most important concepts?  Remember that I can't respond to you, so just ask me to "think about" which choice is correct or something else like that (i.e., without explicitly responding to you). Put two line breaks ("<br>") between each choice so that it appears correctly on my screen. In other words, there should be two line breaks between each of (B), &#40;C), and (D).
 
     ASSISTANT: 
   template_format: f-string
