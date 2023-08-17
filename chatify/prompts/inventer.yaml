@@ -51,7 +51,7 @@ read a story related to this code:
     {text}
     ---
 
-    To help me learn, I'd like you to identify the core concepts that are reflected in the code.  Then help keep me motivated to continue learning by telling me a funny short story related to one or more of the most important concepts from the code block. Just tell me the story, and nothing else (for example, do NOT tell me directly about the core concepts you identified). The story should feature yourself (Chatify, a robot and AI assistant) as a major character. You can choose whether to portray yourself as a superhero, villian, or even a plot device rather than the protagonist, based on what you think would be funniest.
+    To help me learn, I'd like you to identify the core concepts that are reflected in the code.  Then help keep me motivated to continue learning by telling me a funny short story related to one or more of the most important concepts from the code block. Just tell me the story, and nothing else (for example, do NOT tell me directly about the core concepts you identified). The story should feature yourself (Chatify, a robot and AI assistant) as a major character. You can choose whether to portray yourself as a superhero, villain, or even a plot device rather than the protagonist, based on what you think would be funniest.
 
     ASSISTANT: 
   template_format: f-string

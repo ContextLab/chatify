@@ -1,0 +1,4 @@
+[codespell]
+skip = .git,*.pdf,*.svg,*.css,*.map,searchindex.js
+ignore-regex = re = /\^.*/
+ignore-words-list = inventer,ative,nd

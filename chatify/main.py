@@ -140,7 +140,7 @@ class Chatify(Magics):
         output : str
             The GPT model output in markdown format.
         """
-        # TODO: Should we create the chain everytime? Only prompt is chainging not the model
+        # TODO: Should we create the chain every time? Only prompt is chainging not the model
         chain = self.llm_chain.create_chain(
             self.cfg["model_config"], prompt_template=prompt
         )
