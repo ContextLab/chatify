@@ -11,7 +11,7 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['gptcache', 'langchain', 'openai', 'markdown', 'ipywidgets', 'requests', 'markdown-it-py[linkify,plugins]', 'pygments']
+requirements = ['gptcache<=0.1.35', 'langchain<=0.0.226', 'openai', 'markdown', 'ipywidgets', 'requests', 'markdown-it-py[linkify,plugins]', 'pygments']
 extras = ['transformers', 'torch>=2.0', 'tensorflow>=2.0', 'flax', 'einops', 'accelerate', 'xformers', 'bitsandbytes', 'sentencepiece', 'llama-cpp-python']
 
 test_requirements = [
