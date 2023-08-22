@@ -1,7 +1,7 @@
 # Chatify
 [![DOI](https://zenodo.org/badge/627651845.svg)](https://zenodo.org/badge/latestdoi/627651845)
 
-<img src="docs/images/greeting.png" alt="greeting" width="400"/>
+<img src="https://raw.githubusercontent.com/ContextLab/chatify/main/docs/images/greeting.png" alt="greeting" width="400"/>
 
 Chatify is a python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to markdown and code cells.  This package is currently in the *alpha* stage: expect broken things, crashes, bad (wrong, misleading) answers, and other serious issues.  That said, we think Chatify is pretty neat even in this early form, and we're excited about its future!
 
