@@ -5,9 +5,6 @@
 
 Chatify is a python package that enables ipython magic commands to Jupyter notebooks that provide LLM-driven enhancements to markdown and code cells.  This package is currently in the *alpha* stage: expect broken things, crashes, bad (wrong, misleading) answers, and other serious issues.  That said, we think Chatify is pretty neat even in this early form, and we're excited about its future!
 
-
-
-
 # Background
 
 This tool was originally created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
@@ -23,7 +20,7 @@ davos.config.suppress_stdout = True
 ```
 
 ```python
-smuggle chatify   # pip: git+https://github.com/ContextLab/chatify.git
+smuggle chatify
 %load_ext chatify
 ```
 
@@ -35,27 +32,39 @@ The first cell installs and enables the [Davos](https://github.com/ContextLab/da
 
 The `smuggle` statement in the second cell is what actually installs, configures, and imports Chatify, and the `%load_ext` line loads and enables the Chatify extension (accessed by adding the `%%explain` magic command to the top of any code cell in the notebook).
 
-If you like to live on the wild side and don't care about protecting your runtime environment from potential side effects of installing Chatify (note: this is **not recommended** and may **break other aspects of your setup**!), you can replace those two cells above with the following:
+If you don't care about protecting your runtime environment from potential side effects of installing Chatify (note: this is **not recommended** and may **break other aspects of your setup**!), you can replace those two cells above with the following:
 
 ```python
-!pip install -qqq git+https://github.com/ContextLab/chatify.git
+!pip install -qqq chatify
 import chatify
 %load_ext chatify
 ```
 
-### Why isn't Chatify on pip/conda?
+Note: the quiet (`-qqq`) flags are optional, but including them will avoid cluttering up your notebook with installation-related messages.  It's probably fine to use this "direct/unsafe install" method if you're running Chatify in a Colab notebook, inside of a container, or in a dedicated virtual environment, but you shouldn't install the unsafe version of Chatify locally. GPU-friendly libraries are notoriously finicky, and since Chatify will mess with some of those libraries it's reasonably likely that your other GPU libraries will stop working correctly if you don't isolate Chatify's effects on your system.
 
-It will be soon!  We're doing some usability testing first.  We'll likely make the package installable via pip initially, and then "later on" (i.e., when someone requests it and/or we get around to it!) we'll add conda support too. For now, you're stuck with the bleeding edge "install directly from GitHub" option.
+### I like to live on the wild side-- give me the bleeding edge version! 
+
+Psst...if you really want to see our lack of quality control on full display, we can tell you the secret password 🤫. Step this way...that's right. Don't mind those animals, pay no attention...🐯🦁🦎...🦌🐘🐬🦕...to install Chatify directly from GitHub (**even though this is not recommended!!**), with no safety checks or guarantees whatsoever, you can add and run this cell to the top of your notebook:
+
+```python
+!pip install -qqq chatify git+https://github.com/ContextLab/chatify.git
+import chatify
+%load_ext chatify
+```
+
+You should really only do this in a fully protected (containerized, virtual)
+environment or on Colab, since it could break other stuff on your system. Don't
+say we didn't warn you!
 
 ## Customizing Chatify
 
-Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself.  In addition to Colaboratory and Kaggle notebooks, Chatify also supports a variety of other systems and setups, including running locally or on other cloud-based systems.  For setups with additional resources, it is possible to switch to better-performing or lower-cost models.  Chatify works in CPU-only environments, but it is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (both ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
+Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself. There's some server magic that happens behind the scenes to make that happen.  In addition to Colaboratory and Kaggle notebooks, Chatify also supports a variety of other systems and setups, including running locally or on other cloud-based systems (e.g., if you don't want our servers to see what you're doing 🕵️).  For setups with additional resources, it is possible to switch to better-performing or lower-cost models.  Chatify works in CPU-only environments, but it is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (e.g., ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
 
 Once you have your API key(s), if needed, create a `config.yaml` file in the directory where you launch your notebook.  For the OpenAI configuration, replace `<OPANAI API KEY>` with your actual OpenAI API key (with no quotes) and then create a `config.yaml` file with the following contents:
 
 ### OpenAI configuration
 
-If you have an OpenAI API key, adding this config.yaml file to your local directory (after adding your API key) will substantially improve your experience:
+If you have an OpenAI API key, adding this config.yaml file to your local directory (after adding your API key) will substantially improve your experience by generating higher quality responses:
 
 ```yaml
 cache_config:
@@ -69,7 +78,7 @@ feedback: False
 model_config:
   open_ai_key: <OPENAI API KEY>
   model: open_ai_model
-  model_name: gpt-3.5-turbo
+  model_name: gpt-4
   max_tokens: 2500
 
 chain_config:
@@ -81,7 +90,7 @@ prompts_config:
 
 ### Llama 2 configuration
 
-If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free!  The 7B and 13B variants of llama 2 both run on the free tier of Google Colaboratory and Kaggle, but the 13B is substantially slower (therefore we recommend the 7B variant if you're using Colaboratory or Kaggle notebooks). Note that using this configuration requires installing the "HuggingFace" dependencies (`pip install chatify[hf]`).
+If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free, and without using our servers!  The 7B and 13B variants of llama 2 both run on the free tier of Google Colaboratory and Kaggle, but the 13B is substantially slower (therefore we recommend the 7B variant if you're using Colaboratory or Kaggle notebooks). Note that using this configuration requires installing the "HuggingFace" dependencies (`pip install chatify[hf]`).
 
 ```yaml
 cache_config:
@@ -109,7 +118,7 @@ prompts_config:
 
 ### Hugging Face configuration (local)
 
-If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free! This will likely require lots of RAM.  It's a nice way to explore a wide variety of models.  Note that using this configuration requires installing the "HuggingFace" dependencies (`pip install chatify[hf]`).
+If you're running your notebook on a well-resourced machine, you can use this config file to get good performance for free, and without using our servers! For most models this will require lots of RAM. It's a nice way to explore a wide variety of models.  Note that using this configuration requires installing the "HuggingFace" dependencies (`pip install chatify[hf]`).
 
 ```yaml
 cache_config:
@@ -139,12 +148,12 @@ After saving your `config.yaml` file, follow the "[**Installing and enabling Cha
 
 # What do I do if I have questions or problems?
 
-We'd love to hear from you!  Please consider filling out our [feedback survey](https://forms.gle/V9ZGssyukjmFR9bk7) or submitting an [issue](https://github.com/ContextLab/chatify/issues).
+We'd love to hear from you 🤩!  If you're using Chatify as part of one of the NMA courses, please consider filling out our [feedback survey](https://forms.gle/V9ZGssyukjmFR9bk7) to help us improve and/or better understand the experience. For more general problems, please submit an [issue](https://github.com/ContextLab/chatify/issues). And for other questions, comments, concerns, etc., just send us an [email](contextualdynamics@gmail.com).
 
 
 # I want to help!
 
-Yay-- welcome 🎉!  This is a new project (in the "concept" phase) and we're looking for all the help we can get!  If you're new around here and want to explore/contribute, here's how:
+Yay-- welcome 🎉!  This is a *very* new project (in the "alpha" phase) and we're looking for all the help we can get!  If you're new around here and want to explore/contribute, here's how:
 
 1. [Fork](https://github.com/ContextLab/chatify/fork) this repository so that you can work with your own "copy" of the code base
 2. Take a look at our [Project Board](https://github.com/orgs/ContextLab/projects/3) and/or the list of open [issues](https://github.com/ContextLab/chatify/issues) to get a sense of the current project status, todo list, etc.

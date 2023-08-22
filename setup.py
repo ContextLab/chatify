@@ -19,8 +19,8 @@ test_requirements = [
 ]
 
 setup(
-    author="NeuroMatch",
-    author_email='nma@neuromatch.io',
+    author="Contextual Dynamics Lab",
+    author_email='contextualdynamics@gmail.com',
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -47,6 +47,6 @@ setup(
     tests_require=test_requirements,
     package_data={'': ['**/*.yaml']},
     url='https://github.com/ContextLab/chatify',
-    version='0.2.0',
+    version='0.2.1',
     zip_safe=False,
 )
