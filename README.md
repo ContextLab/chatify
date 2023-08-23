@@ -56,6 +56,17 @@ You should really only do this in a fully protected (containerized, virtual)
 environment or on Colab, since it could break other stuff on your system. Don't
 say we didn't warn you!
 
+## What does Chatify look like in action?
+
+Check out this [demo](https://github.com/ContextLab/chatify/blob/main/docs/images/chatify_demo.gif):
+
+<img src="https://github.com/ContextLab/chatify/blob/main/docs/images/chatify_demo.gif?raw=true" alt="demo" width="720"/>
+
+It shows how to:
+ - [x] Install and enable Chatify in a Colaboratory notebook
+ - [x] Use the `%%explain` magic command to request an explanation of a tricky code block
+ - [x] Remove the `%%explain` magic command and run the cell as usual
+
 ## Customizing Chatify
 
 Chatify is designed to work by default in the free tiers of [Colaboratory](https://colab.research.google.com/) and [Kaggle](https://www.kaggle.com/code) notebooks, and to operate without requiring any additional costs or setup beyond installing and enabling Chatify itself. There's some server magic that happens behind the scenes to make that happen.  In addition to Colaboratory and Kaggle notebooks, Chatify also supports a variety of other systems and setups, including running locally or on other cloud-based systems (e.g., if you don't want our servers to see what you're doing 🕵️).  For setups with additional resources, it is possible to switch to better-performing or lower-cost models.  Chatify works in CPU-only environments, but it is GPU-friendly (for both CUDA-enabled and Metal-enabled systems).  We support any text-generation model on [Hugging Face](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending), Meta's [Llama 2](https://ai.meta.com/resources/models-and-libraries/llama-downloads/) models, and OpenAI's [ChatGPT](https://chat.openai.com/) models (e.g., ChatGPT-3.5 and ChatGPT-4).  Models that run on Hugging Face or OpenAI's servers require either a [Hugging Face API key](https://huggingface.co/docs/api-inference/quicktour#get-your-api-token) or an [OpenAI API key](https://platform.openai.com/signup), respectively.
