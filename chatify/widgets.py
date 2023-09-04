@@ -1,5 +1,7 @@
 import ipywidgets as widgets
 
+import pathlib
+
 
 def option_widget(config):
     """Create an options dropdown widget based on the given configuration.
@@ -39,6 +41,15 @@ def button_widget():
         icon='fa-comments',
     )
     return button
+
+
+def loading_widget():
+    dirname = pathlib.Path(__file__).parent.resolve()
+    with open(f"{dirname}/assets/loading.gif", "rb") as file:
+        # read file as string into `image`
+        image = file.read()
+    loading = widgets.Image(value=image, format='gif', width=0, height=10)
+    return loading
 
 
 def thumbs(icon='fa-thumbs-up'):
