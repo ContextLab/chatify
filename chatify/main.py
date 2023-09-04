@@ -9,7 +9,7 @@ from IPython.core.magic import Magics, magics_class, cell_magic
 import ipywidgets as widgets
 
 from .chains import CreateLLMChain
-from .widgets import option_widget, button_widget, text_widget, thumbs
+from .widgets import option_widget, button_widget, text_widget, thumbs, loading_widget
 
 from .utils import check_dev_config, get_html
 
@@ -71,7 +71,8 @@ class Chatify(Magics):
     def _create_ui_elements(self):
         """Creates UI elements like buttons, prompt types, texts, and options."""
         # Buttons and prompt types
-        self.button = button_widget()
+        self.execute_button = button_widget()
+        self.loading = loading_widget()
         self.prompt_types = self._read_prompt_dir()
         self.prompt_names = {
             item: key for item, key in enumerate(self.prompt_types.keys())
@@ -104,16 +105,13 @@ class Chatify(Magics):
         if self.cfg["feedback"]:
             elements = [
                 self.options[prompt_type],
-                self.button,
+                self.execute_button,
                 self.thumbs_up,
                 self.thumbs_down,
             ]
 
         else:
-            elements = [
-                self.options[prompt_type],
-                self.button,
-            ]
+            elements = [self.options[prompt_type], self.execute_button, self.loading]
         hbox = widgets.HBox(elements)
         vbox = widgets.VBox([hbox, self.texts[prompt_type]])
         return vbox
@@ -156,6 +154,7 @@ class Chatify(Magics):
         *args
             Variable-length argument list.
         """
+        self.loading.width = 30
         index = self.tabs.selected_index
         selected_prompt = self.prompt_names[index]
         # Get the prompt
@@ -164,6 +163,7 @@ class Chatify(Magics):
         ]
         self.texts[selected_prompt].value = self.gpt(self.cell_inputs, self.prompt)
         self.response = self.texts[selected_prompt].value
+        self.loading.width = 0
 
     def record(self, *args):
         try:
@@ -216,7 +216,7 @@ class Chatify(Magics):
         display(accordion)
 
         # Button click
-        self.button.on_click(self.update_values)
+        self.execute_button.on_click(self.update_values)
 
         # Thumbs up and down
         self.thumbs_down.on_click(self.record)

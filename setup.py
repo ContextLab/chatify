@@ -11,8 +11,28 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['gptcache<=0.1.35', 'langchain<=0.0.226', 'openai', 'markdown', 'ipywidgets', 'requests', 'markdown-it-py[linkify,plugins]', 'pygments']
-extras = ['transformers', 'torch>=2.0', 'tensorflow>=2.0', 'flax', 'einops', 'accelerate', 'xformers', 'bitsandbytes', 'sentencepiece', 'llama-cpp-python']
+requirements = [
+    'gptcache<=0.1.35',
+    'langchain<=0.0.226',
+    'openai',
+    'markdown',
+    'ipywidgets',
+    'requests',
+    'markdown-it-py[linkify,plugins]',
+    'pygments',
+]
+extras = [
+    'transformers',
+    'torch>=2.0',
+    'tensorflow>=2.0',
+    'flax',
+    'einops',
+    'accelerate',
+    'xformers',
+    'bitsandbytes',
+    'sentencepiece',
+    'llama-cpp-python',
+]
 
 test_requirements = [
     'pytest>=3',
@@ -47,7 +67,7 @@ setup(
     packages=find_packages(include=['chatify', 'chatify.*']),
     test_suite='tests',
     tests_require=test_requirements,
-    package_data={'': ['**/*.yaml']},
+    package_data={'': ['**/*.yaml', '**/*.gif']},
     url='https://github.com/ContextLab/chatify',
     version='0.2.1',
     zip_safe=False,
