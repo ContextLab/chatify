@@ -1,14 +1,12 @@
-from typing import Any, List, Mapping, Optional
-
 import random
 import urllib
-
-from markdown_it import MarkdownIt
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import get_lexer_by_name
-from pygments import highlight
+from typing import Any, List, Mapping, Optional
 
 from langchain.llms.base import LLM
+from markdown_it import MarkdownIt
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
 
 
 def highlight_code(code, name, attrs):

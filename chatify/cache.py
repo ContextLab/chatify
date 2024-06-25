@@ -1,15 +1,8 @@
-from gptcache.adapter.langchain_models import LangChainLLMs
 from gptcache import Cache
-from gptcache.processor.pre import get_prompt
-
-
-from gptcache.manager import get_data_manager, CacheBase, VectorBase
-
-
+from gptcache.adapter.langchain_models import LangChainLLMs
 from gptcache.embedding import Onnx
-from gptcache.embedding.string import to_embeddings as string_embedding
-
-
+from gptcache.manager import CacheBase, VectorBase, get_data_manager
+from gptcache.processor.pre import get_prompt
 from gptcache.similarity_evaluation.distance import SearchDistanceEvaluation
 from gptcache.similarity_evaluation.exact_match import ExactMatchEvaluation
 
