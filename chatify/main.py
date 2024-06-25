@@ -1,17 +1,14 @@
-import yaml
-
 import pathlib
-import requests
-
-from IPython.display import display
-from IPython.core.magic import Magics, magics_class, cell_magic
 
 import ipywidgets as widgets
+import yaml
+from IPython.core.magic import Magics, cell_magic, magics_class
+from IPython.display import display
 
 from .chains import CreateLLMChain
-from .widgets import option_widget, button_widget, text_widget, thumbs, loading_widget
-
 from .utils import check_dev_config, get_html
+from .widgets import (button_widget, loading_widget, option_widget,
+                      text_widget, thumbs)
 
 
 @magics_class

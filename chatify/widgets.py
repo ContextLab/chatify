@@ -1,6 +1,6 @@
-import ipywidgets as widgets
-
 import pathlib
+
+import ipywidgets as widgets
 
 
 def option_widget(config):

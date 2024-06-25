@@ -1,19 +1,13 @@
 from typing import Any, Dict, List, Optional
 
 import requests
-
-
-from langchain.prompts import PromptTemplate
+from langchain.callbacks.manager import CallbackManagerForChainRun
 from langchain.chains import LLMChain, LLMMathChain
 from langchain.chains.base import Chain
+from langchain.prompts import PromptTemplate
 
-
-from typing import Any, Dict, Optional
-from langchain.callbacks.manager import CallbackManagerForChainRun
-
-from .llm_models import ModelsFactory
 from .cache import LLMCacher
-
+from .llm_models import ModelsFactory
 from .utils import compress_code
 
 
@@ -21,10 +15,10 @@ class RequestChain(Chain):
     llm_chain: LLMChain = None
     prompt: Optional[Dict[str, Any]]
     headers: Optional[Dict[str, str]] = {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
+        "accept": "application/json",
+        "Content-Type": "application/json",
     }
-    input_key: str = 'text'
+    input_key: str = "text"
     url: str = "url"  #: :meta private:
     output_key: str = "text"  #: :meta private:
 
@@ -50,14 +44,14 @@ class RequestChain(Chain):
         run_manager: Optional[CallbackManagerForChainRun] = None,
     ) -> Dict[str, Any]:
         # Prepare data
-        if self.url != '/':
-            self.url += '/'
-        combined_url = self.url + self.prompt['prompt_id'] + '/response'
-        data = {'user_text': inputs[self.input_key]}
+        if self.url != "/":
+            self.url += "/"
+        combined_url = self.url + self.prompt["prompt_id"] + "/response"
+        data = {"user_text": inputs[self.input_key]}
 
         # Send the request
         response = requests.post(url=combined_url, headers=self.headers, json=data)
-        output = eval(response.content.decode('utf-8'))
+        output = eval(response.content.decode("utf-8"))
 
         return {self.output_key: output}
 
@@ -77,16 +71,16 @@ class CreateLLMChain:
         None
         """
         self.config = config
-        self.chain_config = config['chain_config']
+        self.chain_config = config["chain_config"]
 
         self.llm_model = None
         self.llm_models_factory = ModelsFactory()
 
-        self.cache = config['cache_config']['cache']
+        self.cache = config["cache_config"]["cache"]
         self.cacher = LLMCacher(config)
 
         # Setup model and chain factory
-        self._setup_llm_model(config['model_config'])
+        self._setup_llm_model(config["model_config"])
         self._setup_chain_factory()
 
         return None
@@ -112,9 +106,9 @@ class CreateLLMChain:
         None
         """
         self.chain_factory = {
-            'math': LLMMathChain,
-            'default': LLMChain,
-            'proxy': RequestChain,
+            "math": LLMMathChain,
+            "default": LLMChain,
+            "proxy": RequestChain,
         }
 
     def create_prompt(self, prompt):
@@ -129,7 +123,7 @@ class CreateLLMChain:
         PROMPT (PromptTemplate): Prompt template object.
         """
         PROMPT = PromptTemplate(
-            template=prompt['content'], input_variables=prompt['input_variables']
+            template=prompt["content"], input_variables=prompt["input_variables"]
         )
         return PROMPT
 
@@ -145,15 +139,15 @@ class CreateLLMChain:
         -------
         chain (LLMChain): LLM chain object.
         """
-        if self.config['chain_config']['chain_type'] == 'proxy':
+        if self.config["chain_config"]["chain_type"] == "proxy":
             chain = RequestChain(
-                url=self.config['model_config']['proxy_url'], prompt=prompt_template
+                url=self.config["model_config"]["proxy_url"], prompt=prompt_template
             )
         else:
             try:
-                chain_type = self.chain_config['chain_type']
+                chain_type = self.chain_config["chain_type"]
             except KeyError:
-                chain_type = 'default'
+                chain_type = "default"
 
             chain = self.chain_factory[chain_type](
                 llm=self.llm_model, prompt=self.create_prompt(prompt_template)
@@ -179,6 +173,6 @@ class CreateLLMChain:
             output = chain.llm(inputs, cache_obj=self.cacher.llm_cache)
             self.cacher.llm_cache.flush()
         else:
-            output = chain(inputs)['text']
+            output = chain(inputs)["text"]
 
         return output
