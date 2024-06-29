@@ -7,8 +7,7 @@ from IPython.display import display
 
 from .chains import CreateLLMChain
 from .utils import check_dev_config, get_html
-from .widgets import (button_widget, loading_widget, option_widget,
-                      text_widget, thumbs)
+from .widgets import button_widget, loading_widget, option_widget, text_widget, thumbs
 
 
 @magics_class
@@ -34,12 +33,31 @@ class Chatify(Magics):
             check_dev_config(self.cfg)
 
         except FileNotFoundError:
-            # If we don't find the user is an end-point user
-            dirname = pathlib.Path(__file__).parent.resolve()
-            self.cfg = yaml.load(
-                open(pathlib.Path(str(dirname) + "/default_config.yaml")),
-                Loader=yaml.SafeLoader,
-            )
+            # If we don't find the config.yaml the user is an end-point user
+            # TODO: Fix a bug where the default_config.yaml file is not found
+            # dirname = pathlib.Path(__file__).parent.resolve()
+            # self.cfg = yaml.load(
+            #     open(pathlib.Path(str(dirname) + "/default_config.yaml")),
+            #     Loader=yaml.SafeLoader,
+            # )
+            # NOTE: As of now, the config is hard-coded as a temporary fix
+            self.cfg = {
+                "cache_config": {
+                    "cache": False,
+                    "caching_strategy": "exact",
+                    "cache_db_version": 0.1,
+                    "url": None,
+                },
+                "feedback": False,
+                "model_config": {
+                    "model": "proxy",
+                    "proxy_url": "https://chatify.experiments.kordinglab.com/prompt/",
+                },
+                "chain_config": {"chain_type": "proxy"},
+                "prompts_config": {
+                    "prompts_to_use": ["tutor", "tester", "inventer", "experimenter"]
+                },
+            }
 
         self.prompts_config = self.cfg["prompts_config"]
 
@@ -202,7 +220,7 @@ class Chatify(Magics):
 
         # Name the tabs components
         for i, prompt_type in enumerate(self.prompt_types.keys()):
-            self.tabs.set_title(i, 'Robo-' + prompt_type.lower())
+            self.tabs.set_title(i, "Robo-" + prompt_type.lower())
             self.texts[prompt_type].value = ""
 
         # Create a tab group
