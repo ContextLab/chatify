@@ -11,15 +11,14 @@ with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
 requirements = [
-    "gptcache<=0.1.35",
-    "langchain<=0.0.226",
+    "langchain>=0.2.6",
+    "langchain-community",
     "openai",
     "markdown",
     "ipywidgets",
     "requests",
     "markdown-it-py[linkify,plugins]",
     "pygments",
-    "pydantic==1.10.11",
 ]
 extras = [
     "transformers",
