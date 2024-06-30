@@ -175,6 +175,6 @@ class CreateLLMChain:
             output = chain.llm(inputs, cache_obj=self.cacher.llm_cache)
             self.cacher.llm_cache.flush()
         else:
-            output = chain(inputs)["text"]
+            output = chain.invoke(inputs)["text"]
 
         return output
