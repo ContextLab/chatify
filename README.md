@@ -7,7 +7,7 @@ Chatify is a python package that enables ipython magic commands to Jupyter noteb
 
 # Background
 
-This tool was originally created to supplement the [Neuromatch Academy](https://compneuro.neuromatch.io/tutorials/intro.html) materials.  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](https://contextlab.github.io/course-content/tutorials/intro.html), and an enhanced version of the deep learning course may be found [here](https://contextlab.github.io/course-content-dl/tutorials/intro.html).
+This tool was originally created to supplement the [Neuromatch Academy](https://neuromatch.io/courses/) materials.  A "Chatify-enhanced" version of the Neuromatch computational neuroscience course may be found [here](http://chatify.compneuro.neuromatch.io/), an enhanced version of the deep learning course may be found [here](http://chatify.deeplearning.neuromatch.io/), an enhanced version of the NeuroAI course may be found [here](http://chatify.neuroai.neuromatch.io/), and an enhanced version of the computational tools for climate science course may be found [here](add.link).
 
 ## Installing and enabling Chatify
 
@@ -75,22 +75,22 @@ Once you have your API key(s), if needed, create a `config.yaml` file in the dir
 
 ### OpenAI configuration
 
-If you have an OpenAI API key, adding this config.yaml file to your local directory (after adding your API key) will substantially improve your experience by generating higher quality responses:
+If you have an OpenAI API key, adding this config.yaml file to your local directory (after adding your API key) enable you to generate responses using any [OpenAI model](https://platform.openai.com/docs/models): 
 
 ```yaml
 cache_config:
   cache: False
   caching_strategy: exact  # alternative: similarity
   cache_db_version: 0.1
-  url: <URL> # ignore this
+  url: None # ignore this
 
 feedback: False
 
 model_config:
-  open_ai_key: <OPENAI API KEY>
+  open_ai_key: <OPENAI API KEY> # paste in your OpenAI API key here
   model: open_ai_model
-  model_name: gpt-4
-  max_tokens: 2500
+  model_name: gpt-4o # replace with a model of your choosing
+  max_tokens: 100000
 
 chain_config:
   chain_type: default
@@ -108,7 +108,7 @@ cache_config:
   cache: False
   caching_strategy: exact  # alternative: similarity
   cache_db_version: 0.1
-  url: <URL> # ignore this
+  url: None # ignore this
 
 feedback: False
 
@@ -116,7 +116,7 @@ model_config:
   model: llama_model
   model_name: TheBloke/Llama-2-70B-Chat-GGML  # can also replace "70B" with either "7B" or "13B" on this line and the next
   weights_fname: llama-2-70b-chat.ggmlv3.q5_1.bin
-  max_tokens: 2500
+  max_tokens: 32000
   n_gpu_layers: 40
   n_batch: 512
 
@@ -136,14 +136,14 @@ cache_config:
   cache: False
   caching_strategy: exact  # alternative: similarity
   cache_db_version: 0.1
-  url: <URL> # ignore this
+  url: None # ignore this
 
 feedback: False
 
 model_config:
   model: huggingface_model
   model_name: TheBloke/Llama-2-70B-Chat-GGML  # replace with any text-generation model on Hugging Face!
-  max_tokens: 2500
+  max_tokens: 32000
   n_gpu_layers: 40
   n_batch: 512
 
